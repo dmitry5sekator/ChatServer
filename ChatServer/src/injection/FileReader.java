@@ -28,7 +28,7 @@ public class FileReader extends RouteReader
 			while(in.hasNextLine())
 			{
 				String line = in.nextLine();
-				space[0] = line.indexOf("team.")-1;
+				space[0] = line.indexOf("controllers.")-1;
 				space[1] = line.indexOf(" ",space[0]+1);
 				//System.out.println(line.substring(0, space[0]) );
 				//System.out.println(line.substring(space[0]+1, space[1]));

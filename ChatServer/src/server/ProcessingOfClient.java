@@ -30,23 +30,12 @@ import our.UserRequest;
 
 public class ProcessingOfClient implements Runnable{
 	private Socket incoming;
-	static Response httpResponce = null;
+	 
 	public ProcessingOfClient(Socket incoming)
 	{
 		this.incoming = incoming;
 	}
 	/////////////////////////////////
-	
-	public static Response getHttpResponce() 
-	{
-		return httpResponce;
-	}
-			     
-	public static void setHttpResponce(Response value) 
-	{
-		httpResponce = value;
-	}
-	
 	
 	//////////////////////////////////
 	@Override
@@ -59,6 +48,7 @@ public class ProcessingOfClient implements Runnable{
 				InputStream input = incoming.getInputStream();
 				OutputStreamWriter r = new OutputStreamWriter(output);
 				///
+				Response httpResponse = null;
 				UserRequest httpRequest = null;
 				String str = "";
 				String str_first = "";
@@ -81,6 +71,7 @@ public class ProcessingOfClient implements Runnable{
 					}
 					
 					httpRequest = new UserRequest();
+					httpResponse = new Response();
 					httpRequest.setBody(str.substring(str.lastIndexOf("<?xml version=")));
 					httpRequest.setRequestString(str_first);
 				}
@@ -88,9 +79,9 @@ public class ProcessingOfClient implements Runnable{
 				{
 					e.printStackTrace();
 				}
-				 ApplicationController.dispatch(httpRequest,httpResponce);
+				 ApplicationController.dispatch(httpRequest,httpResponse);
 				//System.out.println(httpResponce.getResponseCode());
-				 r.write(httpResponce.getBody());
+				 r.write(httpResponse.getBody());
 				incoming.shutdownOutput();
 				incoming.close();
 		}

@@ -1,12 +1,15 @@
 package controllers;
 
+import our.Response;
+import our.UserRequest;
+
 public class MessagesController 
 {
-	public void sendMessageToChatRoom() //POST
+	public void sendMessageToChatRoom(UserRequest http_request,Response http_response) //POST
 	{
 		
 	}
-	public void getMessageFromChatRoom()
+	public void getMessageFromChatRoom(UserRequest http_request,Response http_response)
 	{
 		
 	}

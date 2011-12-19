@@ -1,28 +1,31 @@
 package controllers;
 
+import our.Response;
+import our.UserRequest;
+
 public class ChatRoomController
 {
-	public void deleteAllUsersFromChatRoom()
+	public void deleteAllUsersFromChatRoom(UserRequest http_request,Response http_response)
 	{
 		
 	}
-	public void deleteUserFromChatRoom()
+	public void deleteUserFromChatRoom(UserRequest http_request,Response http_response)
 	{
 		
 	}
-	public void deleteChatRoom()
+	public void deleteChatRoom(UserRequest http_request,Response http_response)
 	{
 		
 	}
-	public void getAllUsersFromChatRoom()
+	public void getAllUsersFromChatRoom(UserRequest http_request,Response http_response)
 	{
 		
 	}
-	public void addToChatRoom() //POST
+	public void addToChatRoom(UserRequest http_request,Response http_response) //POST
 	{
 		
 	}
-	public void createChatRoom() //POST
+	public void createChatRoom(UserRequest http_request,Response http_response) //POST
 	{
 		
 	}

@@ -1,10 +1,10 @@
 package our;
 
-import java.io.Serializable;
 
-public class Response implements Serializable
+
+public class Response
 {
-	private static final long serialVersionUID = 1L;
+
 	public Response(ResponseCodes Code, String body)
 	{
 		setResponseCode(Code);

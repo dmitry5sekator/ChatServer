@@ -55,7 +55,7 @@ public class ConnectToDB {
 				{
 					 Response e = new Response();
 					 e.setResponseCode(ResponseCodes.UserExists);
-					 ProcessingOfClient.setHttpResponce(e);
+					// ProcessingOfClient.setHttpResponce(e);
 					 ok = false;
 					 break;
 				}
@@ -66,7 +66,7 @@ public class ConnectToDB {
 				stat.executeUpdate(command);
 				Response e = new Response();
 				e.setResponseCode(ResponseCodes.UserAdded);
-				ProcessingOfClient.setHttpResponce(e);
+				//ProcessingOfClient.setHttpResponce(e);
 			}
 		}
 		catch(SQLException ex)
