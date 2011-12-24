@@ -16,15 +16,11 @@ import parse.XMLParser;
 public class UserController 
 {
 	private HashMap <String,String> map = new HashMap <String,String>();
-	public void getUser(UserRequest http_request,Response http_response)
+	public void getUser(UserRequest http_request,Response http_response) // +
 	{
 		
 	}
-	public void getAllUsers(UserRequest http_request,Response http_response)
-	{
-		
-	}
-	public void signIn(UserRequest http_request,Response http_responce) //throws IOException //POST
+	public void signIn(UserRequest http_request,Response http_responce) //POST + 
 	{
 		Random r = new Random();
 		String way = "request_files/signIn" + Integer.toString(r.nextInt()) + ".req";
@@ -48,11 +44,11 @@ public class UserController
 	{
 		
 	}
-	public void updateUser(UserRequest http_request,Response http_response)
+	public void updateUser(UserRequest http_request,Response http_response) // +
 	{
 		
 	}
-	public void createUser(UserRequest http_request,Response http_response) //POST
+	public void createUser(UserRequest http_request,Response http_response) //POST + 
 	{
 		
 	}
