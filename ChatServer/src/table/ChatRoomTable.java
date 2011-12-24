@@ -1,44 +1,107 @@
 package table;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import com.mysql.jdbc.Connection;
 
-public class ChatRoomTable  extends TableGateWay 
+public class ChatRoomTable extends TableGateWay
 {
-
-	public ChatRoomTable(Connection conn)
+	Statement stat;
+	String tableName = "chatroom";
+	public ChatRoomTable(Connection conn) 
 	{
-		super(conn);
+		super(conn,"chatroom");
 		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public ResultSet SELECT(String query) 
+	public ResultSet getAllUsersFromChatRoom(int id)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		try
+		{
+			String SQL = "SELECT chatroom.id,`chatroom`.`name` " +
+							"FROM users,recipient,chatroom "+
+					"WHERE users.id = recipient.users_id AND "+
+							"recipient.chatroom_id = chatroom.id AND "+
+					"`chatroom`.`id` = "+id+"";
+			Statement stat = conn.createStatement();
+			ResultSet set = stat.executeQuery(SQL);
+			
+			return set;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return null;
+		}
 	}
-
-	@Override
-	public int UPDATE(String query) 
+	public ResultSet getAdminRoom(int id)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		try
+		{
+			String SQL = "SELECT chatroom.id,`chatroom`.`name` " +
+							"FROM users,recipient,chatroom "+
+					"WHERE users.id = recipient.users_id AND "+
+							"recipient.chatroom_id = chatroom.id AND "+
+					"`chatroom`.`users_id` = `users`.`id` "+
+					"`chatroom`.`id` = "+id+"";
+			Statement stat = conn.createStatement();
+			ResultSet set = stat.executeQuery(SQL);
+			return set;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return null;
+		}
 	}
-
-	@Override
-	public int DELETE(String query) 
+	public int deleteAllUsersFromChatRoom(int id)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		try
+		{
+			Statement stat = conn.createStatement();
+			String SQL = "DELETE FROM recipient WHERE chatroom_id = "+id+"";
+			System.out.println(SQL);
+			return stat.executeUpdate(SQL);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			return 0;
+		}
+		
 	}
-
-	@Override
-	public int CREATE_TABLE(String query) 
+	public int deleteUserFromChatRoom(int idUser,int idRoom)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		try
+		{
+			Statement stat = conn.createStatement();
+			String SQL = "DELETE FROM recipient WHERE chatroom_id = "+idRoom+" AND users_id ="+idUser+"";
+			System.out.println(SQL);
+			return stat.executeUpdate(SQL);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			return 0;
+		}
+		
 	}
-
+	public int addToChatRoom(int idUser,int idRoom)
+	{
+		try
+		{
+			Statement stat = conn.createStatement();
+			String SQL = "INSERT INTO `chat_db`.`recipient` (`users_id`, `chatroom_id`) VALUES ("+idUser+", "+idRoom+");";
+			System.out.println(SQL);
+			return stat.executeUpdate(SQL);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			return 0;
+		}
+		
+	}
+	
 }

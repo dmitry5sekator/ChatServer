@@ -1,58 +1,147 @@
 package table;
 
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 
-import com.mysql.jdbc.Connection;
 
-public class UserTable extends TableGateWay 
+
+public class UserTable extends TableGateWay
 {
-
+	Statement stat;
+	String tableName = "users";
 	public UserTable(Connection conn) 
 	{
-		super(conn);
+		super(conn,"users");
 		// TODO Auto-generated constructor stub
 	}
-	//////////////////// SELECT ///////////////////
-	public ResultSet findByNick(String nickName)
+	public int returnId(String nick,String pass)
 	{
-		String command = "SELECT info FROM users WHERE nickName="+nickName+"";
-		return null;
+		try
+		{
+			String id = "";
+			String SQL = "SELECT id FROM " +tableName+ " WHERE `nick` = '"+nick+"' AND `password` = '"+pass+"'";
+			System.out.println(SQL);
+			Statement stat = conn.createStatement();
+			ResultSet set = stat.executeQuery(SQL);
+			while(set.next())
+			{
+				id = set.getString("id");
+			}
+			return Integer.parseInt(id);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return 0;
+		}
+		//return 0;
 	}
-	public ResultSet checkByNickAndPass(String nickName,String password)
+	public boolean checkSingIn(int id,String pass)
 	{
-		String command = "SELECT nickName FROM"; //here
-		return null;
+		try
+		{
+			String temp = "";
+			String SQL = "SELECT id FROM " +tableName+ " WHERE `id` = '"+id+"' AND `password` = '"+pass+"'";
+			System.out.println(SQL);
+			Statement stat = conn.createStatement();
+			ResultSet set = stat.executeQuery(SQL);
+			
+			while(set.next())
+			{
+				temp = set.getString("id");
+			}
+			System.out.println(temp);
+			if(temp == "")
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return false;
+		}
 	}
-	public ResultSet getAllUsers()
+	public String[] getUser(int id)
 	{
-		String command = "SELECT * FROM users";
-		return null;
+		try
+		{
+			String nick = "";
+			String info = "";
+			String SQL = "SELECT nick,info FROM " +tableName+ " WHERE `id` = '"+id+"'";
+			System.out.println(SQL);
+			Statement stat = conn.createStatement();
+			ResultSet set = stat.executeQuery(SQL);
+			while(set.next())
+			{
+				nick = set.getString("nick");
+				info = set.getString("info");
+			}
+			return new String[]{nick,info};
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return null;
+		}
 	}
-	///////////////////////////////////////////////////
-	////////////// INSERT ///////////////////////
-	public void createUser(String nickName,String password,String info)
+	public ResultSet getAllChatRoom_iIn(int id)
 	{
-		String command = "INSERT INTO users (nickName,password,info) VALUES("+nickName+","+password+","+info+")";
+		//SELECT users.nick,`chatroom`.`name` FROM users,recipient,chatroom WHERE users.id = recipient.users_id AND
+			//	recipient.chatroom_id = chatroom.id AND
+				//`users`.`nick` = 'DonKarleon';
+		try
+		{
+			String SQL = "SELECT chatroom.id,`chatroom`.`name` " +
+							"FROM users,recipient,chatroom "+
+					"WHERE users.id = recipient.users_id AND "+
+							"recipient.chatroom_id = chatroom.id AND "+
+					"`users`.`id` = "+id+"";
+			Statement stat = conn.createStatement();
+			ResultSet set = stat.executeQuery(SQL);
+			
+			return set;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return null;
+		}
+		
 	}
-	/////////////////////////////////////////////
-	/////////////// UPDATE ///////////////////////
-	public void updateUserPassInfo(String nickName,String password,String info)
+	public ResultSet getAllChatRoom_iAdmin(int id)
 	{
-		String command = "UPDATE password,info SET password="+password+",info="+info+" WHERE nickName="+nickName+")";
+		try
+		{
+			String SQL = "SELECT `chatroom`.`id`,`chatroom`.`name` " +
+					"FROM users,recipient,chatroom "+
+					"WHERE users.id = recipient.users_id AND "+				
+						"recipient.chatroom_id = chatroom.id AND "+
+						"`chatroom`.`users_id` = `users`.`id` AND "+
+				"`users`.`id` = "+id+"";
+			Statement stat = conn.createStatement();
+			ResultSet set = stat.executeQuery(SQL);
+		
+			return set;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return null;
+		}
+	
 	}
-	public void updateUserInfo(String nickName,String info)
-	{
-		String command = "UPDATE info SET info="+info+" WHERE nickName="+nickName+")";
-	}
-	public void updateUserPass(String nickName,String pass)
-	{
-		String command = "UPDATE password SET pass="+pass+" WHERE nickName="+nickName+")";
-	}
-	/////////////////////////////////////////////
-	/////////////////// DELETE /////////////////
-	public void deleteUser(String nickName)
-	{
-		String command = "DELETE FROM users WHERE nickName ="+nickName+"";
-	}
-	//////////////////////////////////////////
 }
