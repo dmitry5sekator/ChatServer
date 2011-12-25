@@ -144,4 +144,22 @@ public class UserTable extends TableGateWay
 		}
 	
 	}
+	public ResultSet getAllLoginPass()
+	{
+		try
+		{
+			String SQL = "SELECT nick,password " +
+					"FROM users ";
+			Statement stat = conn.createStatement();
+			ResultSet set = stat.executeQuery(SQL);
+		
+			return set;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
 }

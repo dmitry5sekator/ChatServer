@@ -1,5 +1,6 @@
 package server;
 
+import injection.AuthCheckerReader;
 import injection.FileReader;
 
 import java.io.File;
@@ -21,9 +22,16 @@ public class Engine {
 	public static void main(String[] args) {
 		// ConnectToDB.test();
 		// My First Commit :*
+		
 		ApplicationController ap = new ApplicationController();
+		
+		AuthChecker checker = new AuthChecker();
+		AuthCheckerReader checkerReader = new AuthCheckerReader();
+		checkerReader.read(checker);
+		
 		FileReader fr = new FileReader("route_db.rdb");
 		fr.read(ap);
+		
 		try
 		{
 			

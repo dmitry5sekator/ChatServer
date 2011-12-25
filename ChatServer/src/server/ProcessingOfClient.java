@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -61,27 +62,38 @@ public class ProcessingOfClient implements Runnable{
 				System.out.println("======================================");
 				//input.close();
 				//incoming.shutdownInput();
+				ArrayList<String> httpParam = new ArrayList<String>();
 				try
 				{
 					String temp;
 					while(inn.hasNextLine())
 					{
-						
-						str += inn.nextLine();
+						String template = inn.nextLine();
+						httpParam.add(template);
+						str += template;
 					}
 					
 					httpRequest = new UserRequest();
 					httpResponse = new Response();
 					httpRequest.setBody(str.substring(str.lastIndexOf("<?xml version=")));
 					httpRequest.setRequestString(str_first);
+					httpRequest.setParam(httpParam);
 				}
 				catch(Exception e)
 				{
 					e.printStackTrace();
 				}
-				 ApplicationController.dispatch(httpRequest,httpResponse);
-				//System.out.println(httpResponce.getResponseCode());
-				 r.write(httpResponse.getBody());
+				if(httpRequest.getRequestString().substring(0, 12) == "POST /users/")
+				{
+					ApplicationController.dispatch(httpRequest,httpResponse);
+					r.write(httpResponse.getBody());
+				}
+				if(AuthChecker.checkAuth(httpRequest.AuthLogin(),httpRequest.AuthPassword()))
+				{
+					ApplicationController.dispatch(httpRequest,httpResponse);
+					r.write(httpResponse.getBody());
+				}
+				
 				incoming.shutdownOutput();
 				incoming.close();
 		}
