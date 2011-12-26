@@ -17,15 +17,16 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
-import answer.ChatRoomTable;
-import answer.MyMap;
-import answer.UserTable;
+
 
 import our.Response;
 import our.ResponseCodes;
 import our.UserRequest;
 import parse.MyXML;
-import parse.XMLParser;
+import table.ChatRoomTable;
+import table.MyMap;
+import table.UserTable;
+
 
 
 public class UserController 

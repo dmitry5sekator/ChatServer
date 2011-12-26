@@ -14,12 +14,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
-import answer.MessagesTable;
-import answer.MyMap;
+
 import our.Response;
 import our.ResponseCodes;
 import our.UserRequest;
 import parse.MyXML;
+import table.MessagesTable;
+import table.MyMap;
 
 public class MessagesController 
 {
