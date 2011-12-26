@@ -41,9 +41,10 @@ public class ConnectToDB {
 		return conn;
 		
 	}
-	public void startUpConnection()
+	public static void startUpConnection()
 	{
 		try {
+			getAuth();
 			conn = DriverManager.getConnection(URL, nick, pass);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

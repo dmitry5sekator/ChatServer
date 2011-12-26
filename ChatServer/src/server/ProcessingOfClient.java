@@ -47,7 +47,7 @@ public class ProcessingOfClient implements Runnable{
 		{
 				OutputStream output = incoming.getOutputStream();
 				InputStream input = incoming.getInputStream();
-				OutputStreamWriter r = new OutputStreamWriter(output);
+				PrintWriter r = new PrintWriter(output);
 				///
 				Response httpResponse = null;
 				UserRequest httpRequest = null;
@@ -86,14 +86,14 @@ public class ProcessingOfClient implements Runnable{
 				if(httpRequest.getRequestString().substring(0, 12) == "POST /users/")
 				{
 					ApplicationController.dispatch(httpRequest,httpResponse);
-					r.write(httpResponse.getBody());
+					//r.write(httpResponse.getBody());
 				}
 				if(AuthChecker.checkAuth(httpRequest.AuthLogin(),httpRequest.AuthPassword()))
 				{
 					ApplicationController.dispatch(httpRequest,httpResponse);
-					r.write(httpResponse.getBody());
+					//r.write(httpResponse.getBody());
 				}
-				
+				r.print(httpResponse.toString().getBytes());
 				incoming.shutdownOutput();
 				incoming.close();
 		}

@@ -23,6 +23,8 @@ public class Engine {
 		// ConnectToDB.test();
 		// My First Commit :*
 		
+		ConnectToDB.startUpConnection();
+		
 		ApplicationController ap = new ApplicationController();
 		
 		AuthChecker checker = new AuthChecker();
