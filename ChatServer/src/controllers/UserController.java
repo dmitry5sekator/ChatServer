@@ -4,12 +4,27 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+
+import answer.ChatRoomTable;
+import answer.MyMap;
+import answer.UserTable;
+
 import our.Response;
+import our.ResponseCodes;
 import our.UserRequest;
+import parse.MyXML;
 import parse.XMLParser;
 
 
@@ -20,25 +35,49 @@ public class UserController
 	{
 		
 	}
-	public void signIn(UserRequest http_request,Response http_responce) //POST + 
+	public void signIn(UserRequest http_request,Response http_response) throws SQLException //POST + 
+, ParserConfigurationException, TransformerFactoryConfigurationError, IOException, TransformerException
 	{
-		Random r = new Random();
-		String way = "request_files/signIn" + Integer.toString(r.nextInt()) + ".req";
-		File f = new File(way);
-		try
-		{
-		f.createNewFile();
-		FileWriter write = new FileWriter(new File(way));
-		write.write(http_request.getBody());
-		write.close();
-		}
-		catch(Exception ex)
-		{ex.printStackTrace();}
-		XMLParser.parse(way, map);
-		String name = map.get("nickName");
-		String password = map.get("password");
-		//ConnectToDB.signIn(name, password,httpResponce);
+		/////////////////
+		final String URL = "jdbc:mysql://localhost/chat_db";
 		
+		final String USERNAME = "root";
+		
+		final String PASSWORD = "ghbvf777ghbvf";
+		
+		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		//////////////////
+		String body = http_request.getBody();
+		HashMap <String,String> map = new HashMap<String,String>();
+		try 
+		{
+			MyXML.parse(map, body);
+			UserTable table = new UserTable(conn);
+			String answer = "";
+//			MyMap toDB = new MyMap();
+//			toDB.add("nick", map.get("nick"));
+//			toDB.add("password", map.get("password"));
+//			toDB.add("info", map.get("info"));
+			boolean check = table.checkSingIn(Integer.parseInt(map.get("id")), map.get("password"));
+			if(check)
+			{
+				ChatRoomTable room = new ChatRoomTable(conn);
+				ResultSet set = room.select();
+				answer = MyXML.createXML("Chatrooms", "chatroom",set);
+			}
+			
+			http_response.setBody(answer);
+			http_response.setResponseCode(ResponseCodes.UserSignedIn);
+			
+			
+			
+			//System.out.println(i);
+		} 
+		catch (UnsupportedEncodingException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void logOut(UserRequest http_request,Response http_response)
 	{
@@ -48,9 +87,42 @@ public class UserController
 	{
 		
 	}
-	public void createUser(UserRequest http_request,Response http_response) //POST + 
+	public void createUser(UserRequest http_request,Response http_response) throws SQLException //POST + 
 	{
+		/////////////////
+		final String URL = "jdbc:mysql://localhost/chat_db";
 		
+		final String USERNAME = "root";
+		
+		final String PASSWORD = "ghbvf777ghbvf";
+		
+		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		//////////////////
+		String body = http_request.getBody();
+		HashMap <String,String> map = new HashMap<String,String>();
+		try 
+		{
+			MyXML.parse(map, body);
+			UserTable table = new UserTable(conn);
+			MyMap toDB = new MyMap();
+			toDB.add("nick", map.get("nick"));
+			toDB.add("password", map.get("password"));
+			toDB.add("info", map.get("info"));
+			table.insert(toDB);
+			int i = table.returnId(map.get("nick"), map.get("password"));
+			
+			http_response.setBody("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><user><id>"+i+"</id></user>");
+			http_response.setResponseCode(ResponseCodes.UserAdded);
+			
+			
+			
+			System.out.println(i);
+		} 
+		catch (UnsupportedEncodingException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

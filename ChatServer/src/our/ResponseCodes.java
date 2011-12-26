@@ -17,6 +17,10 @@ public enum ResponseCodes implements Serializable
 	RoomUpdated,
 	RoomExists,
 	RoomNotFound,
+	UserAddedToRoom,
+	
+	MessageIsDelivered,
+	MessageIsNotDelivered,
 	
 	FriendAdded,
 	FriendAcepted,
