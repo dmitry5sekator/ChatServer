@@ -75,7 +75,6 @@ public class MessagesController
 	}
 	public void getMessageFromChatRoom(UserRequest http_request,Response http_response) throws SQLException, ParserConfigurationException, TransformerFactoryConfigurationError, IOException, TransformerException
 	{
-		//(GET /chatroom/)[A-z0-9_]{3,20}(/messages)
 		final String URL = "jdbc:mysql://localhost/chat_db";
 		
 		final String USERNAME = "root";
@@ -96,7 +95,7 @@ public class MessagesController
 		
 		//answer = MyXML.createXML("Chatrooms", "chatroom",set);
 		
-		http_response.setBody("");
+		http_response.setBody(answer);
 		http_response.setResponseCode(ResponseCodes.MessageIsDelivered);
 	}
 }

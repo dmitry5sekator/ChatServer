@@ -28,7 +28,6 @@ import table.MyMap;
 import table.UserTable;
 
 
-
 public class UserController 
 {
 	private HashMap <String,String> map = new HashMap <String,String>();

@@ -20,6 +20,7 @@ import parse.MyXML;
 import table.ChatRoomTable;
 import table.MessagesTable;
 import table.MyMap;
+import table.RecipientTable;
 
 public class ChatRoomController
 {
@@ -38,7 +39,7 @@ public class ChatRoomController
 	public void addToChatRoom(UserRequest http_request,Response http_response) throws SQLException //POST +
 , ParserConfigurationException, TransformerFactoryConfigurationError, IOException, TransformerException
 	{
-		final String URL = "jdbc:mysql://localhost/chat_db";
+final String URL = "jdbc:mysql://localhost/chat_db";
 		
 		final String USERNAME = "root";
 		
@@ -52,13 +53,15 @@ public class ChatRoomController
 		try 
 		{
 			MyXML.parse(map, body);
-			ChatRoomTable table = new ChatRoomTable(conn);
+			RecipientTable table = new RecipientTable(conn);
 			MyMap toDB = new MyMap();
 			toDB.add("users_id", map.get("users_id"));
 			toDB.add("chatroom_id", map.get("chatroom_id"));
 			table.insert(toDB);
-		
-			ResultSet users = table.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
+			
+			ChatRoomTable table1 = new ChatRoomTable(conn);
+			
+			ResultSet users = table1.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
 			
 			MessagesTable msg = new MessagesTable(conn);
 			ResultSet msgs = msg.getMessageFromChatRoom(Integer.parseInt(map.get("chatroom_id")), 1);
@@ -66,7 +69,7 @@ public class ChatRoomController
 			//http_response.setBody("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><chatroom><id>"+i+"</id></chatroom>");
 			http_response.setResponseCode(ResponseCodes.UserAddedToRoom);
 			
-			
+			//System.out.println(MyXML.createXML_Room_UsersMSG(users, msgs));
 			
 			//System.out.println(i);
 		} 
@@ -78,7 +81,7 @@ public class ChatRoomController
 	}
 	public void createChatRoom(UserRequest http_request,Response http_response) throws SQLException //POST + 
 	{
-		final String URL = "jdbc:mysql://localhost/chat_db";
+final String URL = "jdbc:mysql://localhost/chat_db";
 		
 		final String USERNAME = "root";
 		
@@ -96,9 +99,9 @@ public class ChatRoomController
 			MyMap toDB = new MyMap();
 			toDB.add("name", map.get("name"));
 			toDB.add("info", map.get("info"));
-			toDB.add("user_id", map.get("user_id"));
+			toDB.add("users_id", map.get("users_id"));
 			table.insert(toDB);
-			int i = table.returnId(map.get("name"), map.get("user_id"));
+			int i = table.returnId(map.get("name"), map.get("users_id"));
 			
 			http_response.setBody("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><chatroom><id>"+i+"</id></chatroom>");
 			http_response.setResponseCode(ResponseCodes.RoomAdded);
