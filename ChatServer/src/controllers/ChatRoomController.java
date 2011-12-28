@@ -17,6 +17,7 @@ import our.Response;
 import our.ResponseCodes;
 import our.UserRequest;
 import parse.MyXML;
+import server.ConnectToDB;
 import table.ChatRoomTable;
 import table.MessagesTable;
 import table.MyMap;
@@ -36,22 +37,16 @@ public class ChatRoomController
 	{
 		
 	}
-	public void addToChatRoom(UserRequest http_request,Response http_response) throws SQLException //POST +
-, ParserConfigurationException, TransformerFactoryConfigurationError, IOException, TransformerException
+	public void addToChatRoom(UserRequest http_request,Response http_response) //POST +
 	{
-final String URL = "jdbc:mysql://localhost/chat_db";
-		
-		final String USERNAME = "root";
-		
-		final String PASSWORD = "ghbvf777ghbvf";
-		
-		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		try 
+		{
+		Connection conn = ConnectToDB.getConnection();
 		String body = http_request.getBody();
 		HashMap <String,String> map = new HashMap<String,String>();
 		
 		
-		try 
-		{
+		
 			MyXML.parse(map, body);
 			RecipientTable table = new RecipientTable(conn);
 			MyMap toDB = new MyMap();
@@ -73,27 +68,22 @@ final String URL = "jdbc:mysql://localhost/chat_db";
 			
 			//System.out.println(i);
 		} 
-		catch (UnsupportedEncodingException e) 
+		catch (Exception e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void createChatRoom(UserRequest http_request,Response http_response) throws SQLException //POST + 
+	public void createChatRoom(UserRequest http_request,Response http_response)//POST + 
 	{
-final String URL = "jdbc:mysql://localhost/chat_db";
-		
-		final String USERNAME = "root";
-		
-		final String PASSWORD = "ghbvf777ghbvf";
-		
-		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		try 
+		{
+		Connection conn = ConnectToDB.getConnection();
 		String body = http_request.getBody();
 		HashMap <String,String> map = new HashMap<String,String>();
 		
 		
-		try 
-		{
+		
 			MyXML.parse(map, body);
 			ChatRoomTable table = new ChatRoomTable(conn);
 			MyMap toDB = new MyMap();
@@ -106,11 +96,13 @@ final String URL = "jdbc:mysql://localhost/chat_db";
 			http_response.setBody("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><chatroom><id>"+i+"</id></chatroom>");
 			http_response.setResponseCode(ResponseCodes.RoomAdded);
 			
-			
+			//getAllOnLineUsers array INT
+			//createEvent
+			//sendEventToSender
 			
 			System.out.println(i);
 		} 
-		catch (UnsupportedEncodingException e) 
+		catch (Exception e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

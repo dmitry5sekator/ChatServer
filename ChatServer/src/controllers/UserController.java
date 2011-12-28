@@ -23,6 +23,7 @@ import our.Response;
 import our.ResponseCodes;
 import our.UserRequest;
 import parse.MyXML;
+import server.ConnectToDB;
 import table.ChatRoomTable;
 import table.MyMap;
 import table.UserTable;
@@ -35,22 +36,16 @@ public class UserController
 	{
 		
 	}
-	public void signIn(UserRequest http_request,Response http_response) throws SQLException //POST + 
-, ParserConfigurationException, TransformerFactoryConfigurationError, IOException, TransformerException
+	public void signIn(UserRequest http_request,Response http_response) //POST + 
 	{
+		try
+		{
 		/////////////////
-		final String URL = "jdbc:mysql://localhost/chat_db";
-		
-		final String USERNAME = "root";
-		
-		final String PASSWORD = "ghbvf777ghbvf";
-		
-		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		Connection conn = ConnectToDB.getConnection();
 		//////////////////
 		String body = http_request.getBody();
 		HashMap <String,String> map = new HashMap<String,String>();
-		try 
-		{
+		
 			MyXML.parse(map, body);
 			UserTable table = new UserTable(conn);
 			String answer = "";
@@ -73,7 +68,7 @@ public class UserController
 			
 			//System.out.println(i);
 		} 
-		catch (UnsupportedEncodingException e) 
+		catch (Exception e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,21 +82,16 @@ public class UserController
 	{
 		
 	}
-	public void createUser(UserRequest http_request,Response http_response) throws SQLException //POST + 
+	public void createUser(UserRequest http_request,Response http_response)//POST + 
 	{
+		try 
+		{
 		/////////////////
-		final String URL = "jdbc:mysql://localhost/chat_db";
-		
-		final String USERNAME = "root";
-		
-		final String PASSWORD = "ghbvf777ghbvf";
-		
-		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		Connection conn = ConnectToDB.getConnection();
 		//////////////////
 		String body = http_request.getBody();
 		HashMap <String,String> map = new HashMap<String,String>();
-		try 
-		{
+		
 			MyXML.parse(map, body);
 			UserTable table = new UserTable(conn);
 			MyMap toDB = new MyMap();
@@ -118,7 +108,7 @@ public class UserController
 			
 			System.out.println(i);
 		} 
-		catch (UnsupportedEncodingException e) 
+		catch (Exception e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -32,7 +32,7 @@ public class UserRequest
      }
      public void setRequestString(String requestString)
      {
-    	 this.requestString = body;
+    	 this.requestString = requestString;
     	 
      }
      public void setParam(ArrayList<String> param)

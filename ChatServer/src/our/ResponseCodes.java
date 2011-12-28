@@ -28,6 +28,10 @@ public enum ResponseCodes implements Serializable
 	FriendExists,
 	FriendNotFound,
 	
-	BadRequest
+	BadRequest,
+	
+	newRoom,
+	newMsgInRoom
+	
 }
 

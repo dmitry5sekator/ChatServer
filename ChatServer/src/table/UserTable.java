@@ -17,7 +17,7 @@ public class UserTable extends TableGateWay
 		try
 		{
 			Statement stat = conn.createStatement();
-			String SQL = "SELECT nick FROM users WHERE id = "+id+" AND password = "+password+"";
+			String SQL = "SELECT nick FROM users WHERE id = "+id+" AND password = '"+password+"'";
 			ResultSet set = stat.executeQuery(SQL);
 			if(set.next())
 			{
@@ -63,7 +63,7 @@ public class UserTable extends TableGateWay
 		try
 		{
 			Statement stat = conn.createStatement();
-			String SQL = "SELECT id,password FROM users;";
+			String SQL = "SELECT nick,password FROM users;";
 			return stat.executeQuery(SQL);
 		}
 		catch(Exception e)

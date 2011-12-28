@@ -26,12 +26,13 @@ import java.util.concurrent.locks.ReentrantLock;
 import controllers.ApplicationController;
 
 import our.Response;
+import our.ResponseCodes;
 import our.UserRequest;
 
 
 public class ProcessingOfClient implements Runnable{
 	private Socket incoming;
-	 
+	 String img = "<img src=\"http://images2.wikia.nocookie.net/__cb20111028025226/creepypasta/images/c/c5/Troll_face.jpg\">";
 	public ProcessingOfClient(Socket incoming)
 	{
 		this.incoming = incoming;
@@ -47,7 +48,8 @@ public class ProcessingOfClient implements Runnable{
 		{
 				OutputStream output = incoming.getOutputStream();
 				InputStream input = incoming.getInputStream();
-				PrintWriter r = new PrintWriter(output);
+				PrintWriter r = new PrintWriter(output,true);
+				OutputStreamWriter r1 = new OutputStreamWriter(output);
 				///
 				Response httpResponse = null;
 				UserRequest httpRequest = null;
@@ -69,6 +71,10 @@ public class ProcessingOfClient implements Runnable{
 					while(inn.hasNextLine())
 					{
 						String template = inn.nextLine();
+						//if(template.equals(""))
+						//{
+							//break;
+						//}
 						httpParam.add(template);
 						str += template;
 					}
@@ -81,19 +87,30 @@ public class ProcessingOfClient implements Runnable{
 				}
 				catch(Exception e)
 				{
+					//r.print(httpResponse.toString().getBytes());
+					r1.write("<html><head></head><body><h1>BAD REQUEST!!!</h1>"+img+"<h2>problem???</h2></body></html>");
+					r1.flush();
+					r1.close();
+					incoming.shutdownOutput();
+					incoming.close();
 					e.printStackTrace();
 				}
-				if(httpRequest.getRequestString().substring(0, 12) == "POST /users/")
-				{
+				//if(AuthChecker.checkAuth(httpRequest.AuthLogin(),httpRequest.AuthPassword()))
+				//{
 					ApplicationController.dispatch(httpRequest,httpResponse);
 					//r.write(httpResponse.getBody());
-				}
-				if(AuthChecker.checkAuth(httpRequest.AuthLogin(),httpRequest.AuthPassword()))
-				{
-					ApplicationController.dispatch(httpRequest,httpResponse);
+				//}
+				//else if(httpRequest.getRequestString().substring(0, 12) == "POST /users/")
+				//{
+					//ApplicationController.dispatch(httpRequest,httpResponse);
 					//r.write(httpResponse.getBody());
-				}
-				r.print(httpResponse.toString().getBytes());
+				//}
+				
+				//r.print(httpResponse.toString().getBytes());
+					r.write(httpResponse.toString());
+					//r.write("<html><head></head><body><h1>BAD REQUEST!!!</h1>"+img+"<h2>problem???</h2></body></html>");
+					r.flush();
+					r.close();
 				incoming.shutdownOutput();
 				incoming.close();
 		}

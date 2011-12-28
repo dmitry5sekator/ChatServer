@@ -23,17 +23,25 @@ public class FileReader extends RouteReader
 		// TODO Auto-generated method stub
 		try
 		{
-			File file = new File("route_db.rdb");
+			String patt [] = {"(POST /chatroom/member/ HTTP/1.1)","(POST /chatroom/ HTTP/1.1)","(POST /chatroom/message/ HTTP/1.1)","(GET /chatroom/)[\\d]{1,6}(/messages/ HTTP/1.1)","(POST /users/signIn/ HTTP/1.1)","(POST /users/ HTTP/1.1)"};
+			File file = new File("route_db.txt");
 			Scanner in = new Scanner(file);
+			int i = 0;
 			while(in.hasNextLine())
 			{
 				String line = in.nextLine();
 				space[0] = line.indexOf("controllers.")-1;
 				space[1] = line.indexOf(" ",space[0]+1);
-				//System.out.println(line.substring(0, space[0]) );
-				//System.out.println(line.substring(space[0]+1, space[1]));
-				ap.addRoute(Pattern.compile(line.substring(0, space[0])), line.substring(space[0]+1, space[1]), line.substring(space[1]+1,line.length()));
+				
+				String pattern = line.substring(0, space[0]);
+				String classname = line.substring(space[0]+1, space[1]);
+				String methodname = line.substring(space[1]+1,line.length());
+				System.out.println(patt[i] + " " + methodname);
+				//ap.addRoute(Pattern.compile(line.substring(0, space[0])), line.substring(space[0]+1, space[1]), line.substring(space[1]+1,line.length()));
+				ap.addRoute(patt[i], classname, methodname);
+				i++;
 			}
+			
 		}
 		catch(Exception ex)
 		{

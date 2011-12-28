@@ -20,7 +20,7 @@ import our.UserRequest;
 public class ApplicationController 
 {
 	private static ArrayList <Route> routes = new ArrayList<Route>();
-	public void addRoute(Pattern pattern,String className,String method)
+	public void addRoute(String pattern,String className,String method)
 	{
 		routes.add(new Route(pattern,className,method));
 	}

@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -19,25 +20,23 @@ import our.Response;
 import our.ResponseCodes;
 import our.UserRequest;
 import parse.MyXML;
+import sender.SenderThread;
+import server.ConnectToDB;
+import table.ChatRoomTable;
 import table.MessagesTable;
 import table.MyMap;
 
 public class MessagesController 
 {
-	public void sendMessageToChatRoom(UserRequest http_request,Response http_response) throws ParserConfigurationException, TransformerFactoryConfigurationError, IOException, TransformerException, SQLException //POST
+	public void sendMessageToChatRoom(UserRequest http_request,Response http_response)//POST
 	{
-		final String URL = "jdbc:mysql://localhost/chat_db";
-		
-		final String USERNAME = "root";
-		
-		final String PASSWORD = "ghbvf777ghbvf";
-		
-		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		try 
+		{
+		Connection conn = ConnectToDB.getConnection();
 		//////////////////
 		String body = http_request.getBody();
 		HashMap <String,String> map = new HashMap<String,String>();
-		try 
-		{
+		
 			MyXML.parse(map, body);
 			MessagesTable table = new MessagesTable(conn);
 			String answer = "";
@@ -63,25 +62,54 @@ public class MessagesController
 			http_response.setBody(answer);
 			http_response.setResponseCode(ResponseCodes.MessageIsDelivered);
 			
+			//getAllUsersInRoom arrayINT
 			
+			
+			
+			
+			
+			
+			
+			
+			
+//			ChatRoomTable room = new ChatRoomTable(conn);
+//			//Получил всех юзеров в комнате для отправки им
+//			ResultSet usersInRoom = room.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
+//			
+//			//ArrayList<Integer> idUsers = new ArrayList<Integer>();
+//			
+//			//Сформировал XML с телом ивента
+//			String xml = MyXML.createXML_Event_newMsgInRoom(Integer.parseInt(map.get("chatroom_id")), Integer.parseInt(map.get("users_id")), map.get("message"));
+//			
+//			//Циклом прогоняюсь по всем юзерам в комнате для отправки
+//			while(usersInRoom.next())
+//			{
+//				//Отсылаю в блядопоток новый ивент куда передаю Response с кодом и телом и юзера адресата
+//				SenderThread.addEvent(new Response(ResponseCodes.newMsgInRoom,xml),usersInRoom.getInt("users.id"));
+//			}
+//			
+			
+			
+			
+			
+			
+			
+			//createEvent
+			//sendEventToSender
 			
 			//System.out.println(i);
 		} 
-		catch (UnsupportedEncodingException e) 
+		catch (Exception e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void getMessageFromChatRoom(UserRequest http_request,Response http_response) throws SQLException, ParserConfigurationException, TransformerFactoryConfigurationError, IOException, TransformerException
+	public void getMessageFromChatRoom(UserRequest http_request,Response http_response) 
 	{
-		final String URL = "jdbc:mysql://localhost/chat_db";
-		
-		final String USERNAME = "root";
-		
-		final String PASSWORD = "ghbvf777ghbvf";
-		
-		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		try
+		{
+		Connection conn = ConnectToDB.getConnection();
 		//////////////////
 		MessagesTable table = new MessagesTable(conn);
 		int start = http_request.getRequestString().lastIndexOf("room/")+5;
@@ -97,5 +125,11 @@ public class MessagesController
 		
 		http_response.setBody(answer);
 		http_response.setResponseCode(ResponseCodes.MessageIsDelivered);
+		}
+		catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

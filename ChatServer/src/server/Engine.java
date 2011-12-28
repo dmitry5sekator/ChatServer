@@ -1,5 +1,6 @@
 package server;
 
+import sender.SenderThread;
 import injection.AuthCheckerReader;
 import injection.FileReader;
 
@@ -9,6 +10,8 @@ import java.io.RandomAccessFile;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+
+import sender.SenderThread;
 
 import controllers.ApplicationController;
 
@@ -36,6 +39,9 @@ public class Engine {
 		
 		try
 		{
+			SenderThread sender = new SenderThread();
+			Thread th = new Thread(sender);
+			th.start();
 			
 			ServerSocket s = new ServerSocket(80);
 			System.out.println("Server is ON");
@@ -50,7 +56,9 @@ public class Engine {
 				Runnable r = new ProcessingOfClient(incoming);
 				Thread t = new Thread(r);
 				t.start();
-				
+				///
+				//sender.addEvent("EBA");
+				///
 			}
 		}
 		catch(IOException e)

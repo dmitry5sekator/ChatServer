@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,10 +15,10 @@ import our.UserRequest;
 
 
 public class Route {
-	private Pattern pattern;
+	private String pattern;
 	private String classname;
 	private String method;
-	public Route(Pattern pattern,String classname,String method)
+	public Route(String pattern,String classname,String method)
 	{
 		this.pattern = pattern;
 		this.classname = classname;
@@ -25,9 +26,40 @@ public class Route {
 	}
 	public boolean match(UserRequest httpRequest)
 	{
-			//System.out.println(httpRequest.getRequestString().substring(0, httpRequest.getRequestString().indexOf(" HTTP")));
-			Matcher matcher = pattern.matcher(httpRequest.getRequestString().substring(0, httpRequest.getRequestString().indexOf(" HTTP")));
-			return matcher.matches();
+//		System.out.println(pattern+" "+httpRequest.getRequestString());
+//		Pattern p = Pattern.compile(pattern);
+//		Matcher m = p.matcher("GET /chatroom/1/messages/ HTTP/1.1");
+//		System.out.println(m.matches());
+		//Pattern p = Pattern.compile(pattern);
+//		System.out.println(httpRequest.getRequestString());
+//		System.out.println(pattern.toString());
+//		Matcher m = pattern.matcher(httpRequest.getRequestString());
+//		System.out.println(m.matches());
+//		
+//			//System.out.println(httpRequest.getRequestString().substring(0, httpRequest.getRequestString().indexOf(" HTTP")));
+//		System.out.println();
+//			System.out.println(pattern.toString());
+//			System.out.println(httpRequest.getRequestString());
+//			System.out.println(matcher.matches());
+//			System.out.println();
+//			
+		
+//		System.out.println(pattern);
+//		System.out.println(httpRequest.getRequestString());
+//		String pattern1 = pattern;
+//		///
+//		Pattern p = Pattern.compile(pattern1);
+//		Matcher m = p.matcher(httpRequest.getRequestString());
+//			return m.matches();
+		////////////////////////////////////////////////////////
+		
+		// U MNU ISTERIKA
+		System.out.println("PATTERN SUKA :::: "  + pattern);
+		
+		
+		Pattern p = Pattern.compile(pattern);
+		Matcher m = p.matcher(httpRequest.getRequestString());
+		return m.matches();
 	}
 	public String getClassName()
 	{
