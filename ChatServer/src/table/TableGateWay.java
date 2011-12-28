@@ -15,7 +15,7 @@ public abstract class TableGateWay
 		this.conn = conn;
 		this.tableName = tableName;
 	}
-	public int delete(int id)
+	public synchronized int delete(int id)
 	{
 		try
 		{
@@ -29,7 +29,7 @@ public abstract class TableGateWay
 			return 0;
 		}
 	}
-	public int insert(MyMap map)
+	public synchronized int insert(MyMap map)
 	{
 		try
 		{
@@ -60,7 +60,7 @@ public abstract class TableGateWay
 			return 0;
 		}
 	}
-	public int update(MyMap map,String field,Object value)
+	public synchronized int update(MyMap map,String field,Object value)
 	{
 		try
 		{
@@ -82,7 +82,7 @@ public abstract class TableGateWay
 			return 0;
 		}
 	}
-	public ResultSet select()
+	public synchronized ResultSet select()
 	{
 		try
 		{

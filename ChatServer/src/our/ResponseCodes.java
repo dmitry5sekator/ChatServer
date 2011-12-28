@@ -18,6 +18,7 @@ public enum ResponseCodes implements Serializable
 	RoomExists,
 	RoomNotFound,
 	UserAddedToRoom,
+	UserLiveAloneFromTheRoom,
 	
 	MessageIsDelivered,
 	MessageIsNotDelivered,
@@ -31,7 +32,8 @@ public enum ResponseCodes implements Serializable
 	BadRequest,
 	
 	newRoom,
-	newMsgInRoom
+	newMsgInRoom,
+	newUserInRoom
 	
 }
 

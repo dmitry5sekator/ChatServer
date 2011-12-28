@@ -36,7 +36,7 @@ public class UserController
 	{
 		
 	}
-	public void signIn(UserRequest http_request,Response http_response) //POST + 
+	public synchronized void signIn(UserRequest http_request,Response http_response) //POST + 
 	{
 		try
 		{
@@ -82,7 +82,7 @@ public class UserController
 	{
 		
 	}
-	public void createUser(UserRequest http_request,Response http_response)//POST + 
+	public synchronized void createUser(UserRequest http_request,Response http_response)//POST + 
 	{
 		try 
 		{

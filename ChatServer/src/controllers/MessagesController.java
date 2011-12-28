@@ -21,6 +21,7 @@ import our.ResponseCodes;
 import our.UserRequest;
 import parse.MyXML;
 import sender.SenderThread;
+
 import server.ConnectToDB;
 import table.ChatRoomTable;
 import table.MessagesTable;
@@ -28,7 +29,7 @@ import table.MyMap;
 
 public class MessagesController 
 {
-	public void sendMessageToChatRoom(UserRequest http_request,Response http_response)//POST
+	public synchronized void sendMessageToChatRoom(UserRequest http_request,Response http_response)//POST
 	{
 		try 
 		{
@@ -66,28 +67,43 @@ public class MessagesController
 			
 			
 			
+			//SenderThread.addEvent(new Response(ResponseCodes.newMsgInRoom,"WE CODE HARD"),0);
 			
 			
 			
 			
 			
+			ChatRoomTable room = new ChatRoomTable(conn);
+			//Получил всех юзеров в комнате для отправки им
+			ResultSet usersInRoom = room.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
 			
-//			ChatRoomTable room = new ChatRoomTable(conn);
-//			//Получил всех юзеров в комнате для отправки им
-//			ResultSet usersInRoom = room.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
-//			
-//			//ArrayList<Integer> idUsers = new ArrayList<Integer>();
-//			
-//			//Сформировал XML с телом ивента
-//			String xml = MyXML.createXML_Event_newMsgInRoom(Integer.parseInt(map.get("chatroom_id")), Integer.parseInt(map.get("users_id")), map.get("message"));
-//			
-//			//Циклом прогоняюсь по всем юзерам в комнате для отправки
-//			while(usersInRoom.next())
-//			{
-//				//Отсылаю в блядопоток новый ивент куда передаю Response с кодом и телом и юзера адресата
-//				SenderThread.addEvent(new Response(ResponseCodes.newMsgInRoom,xml),usersInRoom.getInt("users.id"));
-//			}
-//			
+			//ArrayList<Integer> idUsers = new ArrayList<Integer>();
+			
+			//Сформировал XML с телом ивента
+			String xml = MyXML.createXML_Event_newMsgInRoom(Integer.parseInt(map.get("chatroom_id")), Integer.parseInt(map.get("users_id")), map.get("message"));
+			
+			
+			//ArrayList<SocketMap> online = SenderThread.getSocketMap();
+			
+			//Циклом прогоняюсь по всем юзерам в комнате для отправки
+			
+			while(usersInRoom.next())
+			{
+				//Отсылаю в блядопоток новый ивент куда передаю Response с кодом и телом и юзера адресата
+				//if(usersInRoom.getInt("users.id") != Integer.parseInt(map.get("users_id")))
+				
+					System.out.println("usersInRoom   "+usersInRoom.getInt("users.id"));
+					//System.out.println("online   "+online.get(i));
+					//if(usersInRoom.getInt("users.id") == Integer.parseInt(online.get(i).getId()))
+					//{
+					if(usersInRoom.getInt("users.id") != Integer.parseInt(map.get("users_id")))
+						SenderThread.addEvent(new Response(ResponseCodes.newMsgInRoom,xml),usersInRoom.getInt("users.id"));
+						//break;
+					//}
+				
+					//SenderThread.addEvent(new Response(ResponseCodes.newMsgInRoom,xml),usersInRoom.getInt("users.id"));
+			}
+			
 			
 			
 			
@@ -105,7 +121,7 @@ public class MessagesController
 			e.printStackTrace();
 		}
 	}
-	public void getMessageFromChatRoom(UserRequest http_request,Response http_response) 
+	public synchronized void getMessageFromChatRoom(UserRequest http_request,Response http_response) 
 	{
 		try
 		{

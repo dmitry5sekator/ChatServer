@@ -12,7 +12,7 @@ public class ChatRoomTable  extends TableGateWay
 		super(conn, "chatroom");
 		// TODO Auto-generated constructor stub
 	}
-	public ResultSet getAllUsersFromChatRoom(int id)
+	public  synchronized ResultSet getAllUsersFromChatRoom(int id)
 	{
 		try
 		{
@@ -29,7 +29,7 @@ public class ChatRoomTable  extends TableGateWay
 		}
 		return null;
 	}
-	public int returnId(String name,String user_id)
+	public synchronized int returnId(String name,String user_id)
 	{
 		try
 		{

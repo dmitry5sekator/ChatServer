@@ -12,7 +12,7 @@ public class MessagesTable  extends TableGateWay
 		super(conn, "messages");
 		// TODO Auto-generated constructor stub
 	}
-	public ResultSet getMessageFromChatRoom(int id,int days)
+	public synchronized ResultSet getMessageFromChatRoom(int id,int days)
 	{
 		try
 		{

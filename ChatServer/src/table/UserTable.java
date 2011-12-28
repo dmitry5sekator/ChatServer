@@ -12,7 +12,7 @@ public class UserTable extends TableGateWay
 		super(conn, "users");
 		// TODO Auto-generated constructor stub
 	}
-	public boolean checkSingIn(int id,String password)
+	public synchronized boolean checkSingIn(int id,String password)
 	{
 		try
 		{
@@ -35,7 +35,7 @@ public class UserTable extends TableGateWay
 		}
 		
 	}
-	public int returnId(String nick,String password)
+	public synchronized int returnId(String nick,String password)
 	{
 		try
 		{
@@ -58,7 +58,7 @@ public class UserTable extends TableGateWay
 		}
 	
 	}
-	public ResultSet getAllLoginPass()
+	public synchronized ResultSet getAllLoginPass()
 	{
 		try
 		{

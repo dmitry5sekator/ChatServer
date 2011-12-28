@@ -52,7 +52,6 @@ public class Engine {
 			while(true)
 			{
 				Socket incoming = s.accept();
-				System.out.println("Connect...");
 				Runnable r = new ProcessingOfClient(incoming);
 				Thread t = new Thread(r);
 				t.start();

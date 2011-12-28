@@ -4,7 +4,7 @@ package our;
 
 public class Response
 {
-	String str ="HTTP/1.1 200 OK \n";
+	String str ="HTTP/1.1 200 OK ";
 	public Response(ResponseCodes Code, String body)
 	{
 		setResponseCode(Code);
@@ -62,11 +62,15 @@ public class Response
 	
 	
 	
-	
+	public String TOSTR()
+	{
+		return str + "code: "+ responseCode.toString() +" "+ body;
+	}
 	public String toString()
 	{
 		//return str+ "Code: "+responseCode.toString()+"\tBody: "+body;
-		return str + "\r\ncode:"+ responseCode.toString() +"\r\n"+ body;
+		//Content-Type: text/xml
+		return str + "code: "+ responseCode.toString() +" "+ body;
 	}
 	private ResponseCodes responseCode;
 	private String body;

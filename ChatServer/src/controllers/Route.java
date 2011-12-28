@@ -54,7 +54,7 @@ public class Route {
 		////////////////////////////////////////////////////////
 		
 		// U MNU ISTERIKA
-		System.out.println("PATTERN SUKA :::: "  + pattern);
+		//System.out.println("PATTERN SUKA :::: "  + pattern);
 		
 		
 		Pattern p = Pattern.compile(pattern);

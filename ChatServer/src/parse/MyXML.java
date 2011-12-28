@@ -2,6 +2,7 @@ package parse;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -227,10 +228,10 @@ public class MyXML
 			childElement = doc.createElement("msgs");
 			childElementMessages.appendChild(childElement);
 			
-			Element nanoChildElement = doc.createElement("message");
-			Text textNanoNode = doc.createTextNode(msg.getString("message"));
-			Element nanoChildElement1 = doc.createElement("users_id");
-			Text textNanoNode1 = doc.createTextNode(msg.getString("users_id"));
+			Element nanoChildElement = doc.createElement("users_id");
+			Text textNanoNode = doc.createTextNode(msg.getString("users_id"));
+			Element nanoChildElement1 = doc.createElement("message");
+			Text textNanoNode1 = doc.createTextNode(msg.getString("message"));
 			
 			childElement.appendChild(nanoChildElement);
 			nanoChildElement.appendChild(textNanoNode);
@@ -433,6 +434,90 @@ public class MyXML
 		
 		t.transform(new DOMSource(doc), new StreamResult(new OutputStreamWriter(xmlStream)));
 		String xml = xmlStream.toString();
+		return xml;
+	}
+	public static String createXML_Event_newUserInRoom(ResultSet users) throws TransformerFactoryConfigurationError, TransformerException, ParserConfigurationException, FileNotFoundException, DOMException, SQLException
+	{
+		OutputStream xmlStream = new  ByteArrayOutputStream();
+		
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document doc = builder.newDocument();
+		
+		Element rootElement = doc.createElement("newUserInRoom");
+		doc.appendChild(rootElement);
+//
+//		
+//		Element childElement = doc.createElement("USER");
+//		//Text textNode = doc.createTextNode("4");
+//		//doc.appendChild(rootElement);
+//		rootElement.appendChild(childElement);
+//		//childElement.appendChild(textNode);
+//		
+//		Element nanoChildElement = doc.createElement("ID");
+//		Text textNanoNode = doc.createTextNode("1");
+//		
+//		childElement.appendChild(nanoChildElement);
+//		nanoChildElement.appendChild(textNanoNode);
+		
+		
+		Element childElement = null;
+		Element childElementUsers = null;
+		Element childElementMessages = null;
+		Text textNode = null;
+		//////////////////////////
+		//childElementUsers = doc.createElement("Users");
+		//rootElement.appendChild(childElementUsers);
+		while(users.next())
+		{
+			//childElement = doc.createElement("user");
+			//childElementUsers.appendChild(childElement);
+			
+			Element nanoChildElement = doc.createElement("id");
+			Text textNanoNode = doc.createTextNode(users.getString("id"));
+			Element nanoChildElement1 = doc.createElement("nick");
+			Text textNanoNode1 = doc.createTextNode(users.getString("nick"));
+			
+			rootElement.appendChild(nanoChildElement);
+			nanoChildElement.appendChild(textNanoNode);
+			
+			rootElement.appendChild(nanoChildElement1);
+			nanoChildElement1.appendChild(textNanoNode1);
+			
+			//textNode = doc.createTextNode(Integer.toString(i));
+			//doc.appendChild(rootElement);
+			//childElementUsers.appendChild(childElement);
+			//childElement.appendChild(textNode);
+		}
+		
+		//////////////////////////
+//		for(int i = 0;i < 4;i++)
+//		{
+//			childElement = doc.createElement(childElementNAME);
+//			rootElement.appendChild(childElement);
+//			
+//			Element nanoChildElement = doc.createElement("id");
+//			Text textNanoNode = doc.createTextNode(Integer.toString(i));
+//			Element nanoChildElement1 = doc.createElement("name");
+//			Text textNanoNode1 = doc.createTextNode(Integer.toString(i));
+//			
+//			childElement.appendChild(nanoChildElement);
+//			nanoChildElement.appendChild(textNanoNode);
+//			
+//			childElement.appendChild(nanoChildElement1);
+//			nanoChildElement1.appendChild(textNanoNode1);
+//			
+//			//textNode = doc.createTextNode(Integer.toString(i));
+//			//doc.appendChild(rootElement);
+//			rootElement.appendChild(childElement);
+//			//childElement.appendChild(textNode);
+//		}
+		
+		Transformer t = TransformerFactory.newInstance().newTransformer();
+	
+		t.transform(new DOMSource(doc), new StreamResult(new OutputStreamWriter(xmlStream)));
+		String xml = xmlStream.toString();
+		System.out.println(xml);
 		return xml;
 	}
 }

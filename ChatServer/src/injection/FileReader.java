@@ -23,7 +23,7 @@ public class FileReader extends RouteReader
 		// TODO Auto-generated method stub
 		try
 		{
-			String patt [] = {"(POST /chatroom/member/ HTTP/1.1)","(POST /chatroom/ HTTP/1.1)","(POST /chatroom/message/ HTTP/1.1)","(GET /chatroom/)[\\d]{1,6}(/messages/ HTTP/1.1)","(POST /users/signIn/ HTTP/1.1)","(POST /users/ HTTP/1.1)"};
+			String patt [] = {"(POST /chatroom/member/ HTTP/1.1)","(POST /chatroom/ HTTP/1.1)","(POST /chatroom/message/ HTTP/1.1)","(GET /chatroom/)[\\d]{1,6}(/messages/ HTTP/1.1)","(POST /users/signIn/ HTTP/1.1)","(POST /users/ HTTP/1.1)","(DELETE /chatroom/)[\\d]{1,6}(/member/)[\\d]{1,6}(/ HTTP/1.1)"};
 			File file = new File("route_db.txt");
 			Scanner in = new Scanner(file);
 			int i = 0;
