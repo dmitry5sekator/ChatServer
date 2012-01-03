@@ -34,7 +34,7 @@ public class SenderThread implements Runnable
 			{
 				try
 				{
-					System.out.println("ÂÍÈÌÀÍÈå =  "+events.peek().getMailto());
+					System.out.println("SEND TO = "+events.peek().getMailto());
 					int idArray = getIdArray(events.peek().getMailto());
 					OutputStream output = online_list.get(idArray).s.getOutputStream();
 					
@@ -50,7 +50,7 @@ public class SenderThread implements Runnable
 					//OutputStream output = user.getSocket().getOutputStream();
 					PrintWriter r = new PrintWriter(output,true);
 					r.println(events.peek().TOSTR());
-				r.println("to String = kall");
+				//r.println("to String = kall");
 //					Socket s = online_list.get(events.peek().getMailto()).getSocket();
 //					//////////
 //					
@@ -74,7 +74,7 @@ public class SenderThread implements Runnable
 			}
 			try 
 			{
-				Thread.currentThread().sleep(200);
+				Thread.currentThread().sleep(50);
 			} 
 			catch (InterruptedException e) 
 			{
