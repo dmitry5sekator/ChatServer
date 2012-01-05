@@ -14,12 +14,6 @@ public class Response
 	{
 		
 	}
-	
-	
-	
-	
-	
-	
 	public int getMailto() 
 	{
 		return mailto;
@@ -28,15 +22,6 @@ public class Response
 	{
 		this.mailto = mailto;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public ResponseCodes getResponseCode() 
 	{
 		return responseCode;
@@ -45,13 +30,6 @@ public class Response
 	{
 		this.responseCode = responseCode;
 	}
-	
-	
-	
-	
-	
-	
-	
 	public String getBody() 
 	{
 		return body;
@@ -59,9 +37,7 @@ public class Response
 	public void setBody(String body) {
 		this.body = body;
 	}
-	
-	
-	
+
 	public String TOSTR()
 	{
 		return str + "code: "+ responseCode.toString() +" "+ body;
