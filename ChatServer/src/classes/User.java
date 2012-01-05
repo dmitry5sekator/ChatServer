@@ -1,18 +1,37 @@
 package classes;
 
+import java.util.HashMap;
+
 public class User 
 {
-	private String nickName;
-	private String passWord;
-	private String info;
-	private String status;
 	private int id;
-	public User(String nickName,String passWord,String info,String status,int id)
+	private String nick;
+	private String password;
+	private String info;
+	public User()
+	{}
+	public User(HashMap <String,String> map)
 	{
-		this.nickName = nickName;
-		this.passWord = passWord;
-		this.info = info;
-		this.status = status;
-		this.id = id;
+		
+		this.info = map.get("info");
+		this.password =map.get("password");
+		this.nick = map.get("nick");
 	}
+	
+	
+	public void setNick(String nick)
+	{this.nick = nick;}
+	public void setPass(String password)
+	{this.password = password;}
+	public void setInfo(String info)
+	{this.info = info;}
+	
+	public int getId()
+	{return id;}
+	public String getNick()
+	{return nick;}
+	public String getPass()
+	{return password;}
+	public String getInfo()
+	{return info;}
 }

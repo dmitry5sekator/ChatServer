@@ -15,6 +15,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
+import classes.Message;
+
 
 import our.Response;
 import our.ResponseCodes;
@@ -45,6 +47,12 @@ public class MessagesController
 			toDB.add("message", map.get("message"));
 			toDB.add("users_id", map.get("users_id"));
 			toDB.add("chatroom_id", map.get("chatroom_id"));
+			//////////////// DTO //////////////////////////
+			//Message msg = new Message();
+			//msg.setMessage(map.get("message"));
+			//msg.setUsersId(Integer.parseInt(map.get("message")));
+			//msg.setChatroomId(Integer.parseInt(map.get("chatroom_id")));
+			///////////////////////////////////////////////
 			////////////// time //////////////////////////
 			 
 			    Calendar cal = Calendar.getInstance();

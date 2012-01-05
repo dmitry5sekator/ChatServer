@@ -17,6 +17,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
+import classes.User;
+
 
 
 import our.Response;
@@ -31,6 +33,7 @@ import table.UserTable;
 
 public class UserController 
 {
+	private User user = new User();
 	private HashMap <String,String> map = new HashMap <String,String>();
 	public void getUser(UserRequest http_request,Response http_response) // +
 	{
@@ -53,6 +56,7 @@ public class UserController
 //			toDB.add("nick", map.get("nick"));
 //			toDB.add("password", map.get("password"));
 //			toDB.add("info", map.get("info"));
+			
 			boolean check = table.checkSingIn(Integer.parseInt(map.get("id")), map.get("password"));
 			if(check)
 			{
@@ -98,6 +102,8 @@ public class UserController
 			toDB.add("nick", map.get("nick"));
 			toDB.add("password", map.get("password"));
 			toDB.add("info", map.get("info"));
+			///////// DTO //////////////////////////////
+			///////////////////////////////////////////
 			table.insert(toDB);
 			int i = table.returnId(map.get("nick"), map.get("password"));
 			

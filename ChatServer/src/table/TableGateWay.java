@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Map;
 
 
 public abstract class TableGateWay 
@@ -42,7 +43,16 @@ public abstract class TableGateWay
 				getFields += "`" + map.getValue(i).key + "`,";
 				getValues += "'" + map.getValue(i).value + "',";
 			}
+			////////////////////////////////////////////////
 			
+//			for (Map.Entry<String,String> entry : map.entrySet()){
+//				  //entry.getKey().customMethod(entry.getValue());
+//					getFields += "`" + entry.getKey() + "`,";
+//					getValues += "'" + entry.getValue() + "',";
+//				}
+			
+			
+			//////////////////////////////////////////////////
 			getFields = getFields.substring(0, getFields.length()-1);
 			getFields += ")";
 			
