@@ -30,29 +30,19 @@ public abstract class TableGateWay
 			return 0;
 		}
 	}
-	public synchronized int insert(MyMap map)
+	public synchronized int insert(Map<String,String> map)
 	{
 		try
 		{
-			map.setTypes(conn, tableName);
 			String getFields = "(";
 			String getValues = " VALUES (";
 
-			for(int i = 0;i < map.lenght();i++)
-			{
-				getFields += "`" + map.getValue(i).key + "`,";
-				getValues += "'" + map.getValue(i).value + "',";
-			}
-			////////////////////////////////////////////////
-			
-//			for (Map.Entry<String,String> entry : map.entrySet()){
-//				  //entry.getKey().customMethod(entry.getValue());
-//					getFields += "`" + entry.getKey() + "`,";
-//					getValues += "'" + entry.getValue() + "',";
-//				}
-			
-			
-			//////////////////////////////////////////////////
+			for (Map.Entry<String,String> entry : map.entrySet()){
+				 
+					getFields += "`" + entry.getKey() + "`,";
+					getValues += "'" + entry.getValue() + "',";
+				}
+
 			getFields = getFields.substring(0, getFields.length()-1);
 			getFields += ")";
 			
@@ -70,16 +60,15 @@ public abstract class TableGateWay
 			return 0;
 		}
 	}
-	public synchronized int update(MyMap map,String field,Object value)
+	public synchronized int update(Map<String,String> map,String field,Object value)
 	{
 		try
 		{
-			map.setTypes(conn, tableName);
 			String SQL = "UPDATE " +tableName+" SET ";
-			for(int i = 0;i < map.lenght();i++)
-			{
-				SQL += "`" + map.getValue(i).key + "`=";
-				SQL += "'" + map.getValue(i).value + "',";
+			for (Map.Entry<String,String> entry : map.entrySet()){
+				 
+				SQL += "`" + entry.getKey() + "`=";
+				SQL += "'" + entry.getValue() + "',";
 			}
 			SQL = SQL.substring(0, SQL.length()-1);
 			SQL = " WHERE `" + field + "` = '"+value+"'";

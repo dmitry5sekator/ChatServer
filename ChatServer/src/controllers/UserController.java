@@ -27,7 +27,6 @@ import our.UserRequest;
 import parse.MyXML;
 import server.ConnectToDB;
 import table.ChatRoomTable;
-import table.MyMap;
 import table.UserTable;
 
 
@@ -95,16 +94,24 @@ public class UserController
 		//////////////////
 		String body = http_request.getBody();
 		HashMap <String,String> map = new HashMap<String,String>();
+		MyXML.parse(map, body);
+		UserTable table = new UserTable(conn);
+		///////////// ololo ///////////////////////////////////
 		
-			MyXML.parse(map, body);
-			UserTable table = new UserTable(conn);
-			MyMap toDB = new MyMap();
-			toDB.add("nick", map.get("nick"));
-			toDB.add("password", map.get("password"));
-			toDB.add("info", map.get("info"));
+		User user = new User(map);
+		
+		
+		/////////////////////////////////////////////////////////
+			
+			
+//			MyMap toDB = new MyMap();
+//			toDB.add("nick", map.get("nick"));
+//			toDB.add("password", map.get("password"));
+//			toDB.add("info", map.get("info"));
 			///////// DTO //////////////////////////////
 			///////////////////////////////////////////
-			table.insert(toDB);
+		//	table.insert(toDB);
+			table.insert(user.toMap());
 			int i = table.returnId(map.get("nick"), map.get("password"));
 			
 			http_response.setBody("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><user><id>"+i+"</id></user>");

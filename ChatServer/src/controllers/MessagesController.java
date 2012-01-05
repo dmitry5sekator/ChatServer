@@ -27,7 +27,6 @@ import sender.SenderThread;
 import server.ConnectToDB;
 import table.ChatRoomTable;
 import table.MessagesTable;
-import table.MyMap;
 
 public class MessagesController 
 {
@@ -43,10 +42,10 @@ public class MessagesController
 			MyXML.parse(map, body);
 			MessagesTable table = new MessagesTable(conn);
 			String answer = "";
-			MyMap toDB = new MyMap();
-			toDB.add("message", map.get("message"));
-			toDB.add("users_id", map.get("users_id"));
-			toDB.add("chatroom_id", map.get("chatroom_id"));
+			//MyMap toDB = new MyMap();
+			//toDB.add("message", map.get("message"));
+			//toDB.add("users_id", map.get("users_id"));
+			//toDB.add("chatroom_id", map.get("chatroom_id"));
 			//////////////// DTO //////////////////////////
 			//Message msg = new Message();
 			//msg.setMessage(map.get("message"));
@@ -61,10 +60,10 @@ public class MessagesController
 
 			  
 			/////////////////////////////////////////////
-			toDB.add("time", time);
+			//toDB.add("time", time);
 
 			MessagesTable r = new MessagesTable(conn);
-			table.insert(toDB);
+			//table.insert(toDB);
 			
 			//answer = MyXML.createXML("Chatrooms", "chatroom",set);
 			

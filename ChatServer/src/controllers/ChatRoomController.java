@@ -22,7 +22,6 @@ import sender.SenderThread;
 import server.ConnectToDB;
 import table.ChatRoomTable;
 import table.MessagesTable;
-import table.MyMap;
 import table.RecipientTable;
 
 public class ChatRoomController
@@ -87,10 +86,10 @@ public class ChatRoomController
 		
 			MyXML.parse(map, body);
 			RecipientTable table = new RecipientTable(conn);
-			MyMap toDB = new MyMap();
-			toDB.add("users_id", map.get("users_id"));
-			toDB.add("chatroom_id", map.get("chatroom_id"));
-			table.insert(toDB);
+			//MyMap toDB = new MyMap();
+			//toDB.add("users_id", map.get("users_id"));
+			//toDB.add("chatroom_id", map.get("chatroom_id"));
+			//table.insert(toDB);
 			
 			ChatRoomTable table1 = new ChatRoomTable(conn);
 			
@@ -157,11 +156,11 @@ public class ChatRoomController
 		
 			MyXML.parse(map, body);
 			ChatRoomTable table = new ChatRoomTable(conn);
-			MyMap toDB = new MyMap();
-			toDB.add("name", map.get("name"));
-			toDB.add("info", map.get("info"));
-			toDB.add("users_id", map.get("users_id"));
-			table.insert(toDB);
+			//MyMap toDB = new MyMap();
+			//toDB.add("name", map.get("name"));
+			//toDB.add("info", map.get("info"));
+			//toDB.add("users_id", map.get("users_id"));
+			//table.insert(toDB);
 			int i = table.returnId(map.get("name"), map.get("users_id"));
 			
 			http_response.setBody("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><chatroom><id>"+i+"</id></chatroom>");
