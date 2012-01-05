@@ -38,6 +38,7 @@ import sender.SenderThread;
 
 public class ProcessingOfClient implements Runnable{
 	Pattern p = Pattern.compile("(GET /listen/)[\\d]{1,6}(/ HTTP/1.1)");
+	Pattern logg = Pattern.compile("(GET /log/)stark_show( HTTP/1.1)");
 	private Socket incoming;
 	String img = "<img src=\"http://images2.wikia.nocookie.net/__cb20111028025226/creepypasta/images/c/c5/Troll_face.jpg\">";
 	public ProcessingOfClient(Socket incoming)
@@ -58,6 +59,8 @@ public class ProcessingOfClient implements Runnable{
 				InputStream input = incoming.getInputStream();
 				PrintWriter r = new PrintWriter(output,true);
 				OutputStreamWriter r1 = new OutputStreamWriter(output);
+				Logger.writeEvent("Connect client IP " + incoming.getInetAddress().toString() + " Port " + incoming.getPort());
+				
 				
 				Response httpResponse = null;
 				UserRequest httpRequest = null;
@@ -68,13 +71,21 @@ public class ProcessingOfClient implements Runnable{
 				
 				str_first = inn.nextLine();
 				Matcher m = p.matcher(str_first);
+				Matcher m1 = logg.matcher(str_first);
 				System.out.println(m.matches());
 				if(m.matches())
 				{
 					SenderThread.addUserToOnLine(Integer.parseInt(str_first.substring(str_first.indexOf("ten/")+4, str_first.indexOf("/ HTTP"))), incoming);
 				}
+				else if(m1.matches())
+				{
+					r1.write(Logger.getHtml());
+					r1.close();
+					Thread.currentThread().interrupt();
+				}
 				else
 				{
+					
 					System.out.println("======================================");
 					System.out.println(incoming.getPort());
 					System.out.println(incoming.getInetAddress().toString());
@@ -83,7 +94,6 @@ public class ProcessingOfClient implements Runnable{
 					ArrayList<String> httpParam = new ArrayList<String>();
 					try
 					{
-						String temp;
 						while(inn.hasNextLine())
 						{
 							String template = inn.nextLine();
@@ -106,12 +116,6 @@ public class ProcessingOfClient implements Runnable{
 					}
 					catch(Exception e)
 					{
-						
-						r1.write("<html><head></head><body><h1>BAD REQUEST!!!</h1>"+img+"<h2>problem???</h2></body></html>");
-						r1.flush();
-						r1.close();
-						incoming.shutdownOutput();
-						incoming.close();
 						e.printStackTrace();
 						try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 					}

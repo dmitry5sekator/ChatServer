@@ -82,7 +82,8 @@ public class SenderThread implements Runnable
 		online_list.get(online_list.size()-1).setIdArray(online_list.size()-1);
 		OutputStream output = s.getOutputStream();
 		PrintWriter r = new PrintWriter(output,true);
-		System.out.println("Успешно добавлен слушатель! ip : " + s.getInetAddress().toString() + " port : " + s.getPort());
+		Logger.writeEvent("Successfully added the listener! ip : " + s.getInetAddress().toString() + " port : " + s.getPort());
+		System.out.println("Successfully added the listener! ip : " + s.getInetAddress().toString() + " port : " + s.getPort());
 	}
 
 }
