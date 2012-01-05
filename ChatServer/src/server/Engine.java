@@ -22,10 +22,8 @@ public class Engine {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// ConnectToDB.test();
-		// My First Commit :*
-		
+	public static void main(String[] args) 
+	{
 		ConnectToDB.startUpConnection();
 		
 		ApplicationController ap = new ApplicationController();
@@ -45,19 +43,12 @@ public class Engine {
 			
 			ServerSocket s = new ServerSocket(80);
 			System.out.println("Server is ON");
-			// Подгружаю данные в Route
-			//Route route = Route.getInstance();
-//			route.showRoutes();
-			
 			while(true)
 			{
 				Socket incoming = s.accept();
 				Runnable r = new ProcessingOfClient(incoming);
 				Thread t = new Thread(r);
 				t.start();
-				///
-				//sender.addEvent("EBA");
-				///
 			}
 		}
 		catch(IOException e)
