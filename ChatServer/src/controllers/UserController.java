@@ -58,6 +58,7 @@ public class UserController
 			}
 			http_response.setBody(answer);
 			http_response.setResponseCode(ResponseCodes.UserSignedIn);
+			Logger.writeEvent("User is online " + map.get("id"));
 		} 
 		catch (Exception e) 
 		{
@@ -86,6 +87,7 @@ public class UserController
 			int i = table.returnId(map.get("nick"), map.get("password"));
 			http_response.setBody("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><user><id>"+i+"</id></user>");
 			http_response.setResponseCode(ResponseCodes.UserAdded);
+			Logger.writeEvent("Create new user " + i);
 			System.out.println(i);
 		} 
 		catch (Exception e) 

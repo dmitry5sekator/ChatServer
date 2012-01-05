@@ -47,10 +47,12 @@ public class ApplicationController
 					     Method mthd=cl.getMethod(r.getMethod(),par);
 					     mthd.setAccessible(true);
 					     mthd.invoke(h,input);
+					     Logger.writeEvent("Calling a method " + r.getMethod() + " class " + r.getClassName());
 					 } 
 					 catch (Exception e) 
 					 {
 					      e.printStackTrace();
+					      try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 					 }
 				}
 			}

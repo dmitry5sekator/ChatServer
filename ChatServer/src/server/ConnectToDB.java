@@ -44,15 +44,19 @@ public class ConnectToDB {
 		return conn;
 		
 	}
-	public static void startUpConnection()
+	public static void startUpConnection() throws IOException
 	{
-		try {
+		try 
+		{
 			getAuth();
 			conn = DriverManager.getConnection(URL, nick, pass);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			Logger.writeEvent("Successfully established a connection to the database " + URL);
+		} 
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
+		
 	}
 }

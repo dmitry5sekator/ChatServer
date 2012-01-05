@@ -12,7 +12,7 @@ import java.util.Calendar;
 public class Logger 
 {
     public Logger() {}
-    public static void writeEvent(String str) throws IOException
+    public static synchronized void writeEvent(String str) throws IOException
 	{
     	Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");

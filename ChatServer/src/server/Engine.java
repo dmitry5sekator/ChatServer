@@ -23,20 +23,23 @@ public class Engine {
 
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) 
+	public static void main(String[] args) throws IOException 
 	{
+		Logger.writeEvent("Start up Server...");
+		
 		ConnectToDB.startUpConnection();
 		
 		ApplicationController ap = new ApplicationController();
-		
-		AuthChecker checker = new AuthChecker();
-		AuthCheckerReader checkerReader = new AuthCheckerReader();
-		checkerReader.read(checker);
+		Logger.writeEvent("Application controller... OK!");
+		//AuthChecker checker = new AuthChecker();
+		//AuthCheckerReader checkerReader = new AuthCheckerReader();
+		//checkerReader.read(checker);
 		
 		FileReader fr = new FileReader("route_db.rdb");
 		fr.read(ap);
-		
+		Logger.writeEvent("Route upload... OK!");
 		try
 		{
 			SenderThread sender = new SenderThread();
@@ -44,7 +47,7 @@ public class Engine {
 			th.start();
 			
 			ServerSocket s = new ServerSocket(80);
-			System.out.println("Server is ON");
+			Logger.writeEvent("Server is ON");
 			while(true)
 			{
 				Socket incoming = s.accept();

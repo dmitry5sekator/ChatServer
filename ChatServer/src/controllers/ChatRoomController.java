@@ -50,7 +50,7 @@ public class ChatRoomController
 			table.getOverFromRoom(Integer.parseInt(user), Integer.parseInt(chatroom));
 			http_response.setBody("");
 			http_response.setResponseCode(ResponseCodes.UserLiveAloneFromTheRoom);
-			
+			Logger.writeEvent("User " + user + " out of the room " + chatroom);
 		}
 		catch (Exception e) 
 		{
@@ -90,6 +90,7 @@ public class ChatRoomController
 				if(usersInRoom.getInt("users.id") != Integer.parseInt(map.get("users_id")))
 					SenderThread.addEvent(new Response(ResponseCodes.newUserInRoom,xml),usersInRoom.getInt("users.id"));
 			}
+			Logger.writeEvent("User " + userInRoom.getUsersId() + " entered the room " + userInRoom.getChatroomId());
 		} 
 		catch (Exception e) 
 		{
@@ -120,6 +121,7 @@ public class ChatRoomController
 			{
 				SenderThread.addEvent(new Response(ResponseCodes.newRoom,xml),res.getInt("users_id"));
 			}
+			Logger.writeEvent("Create new room " + i + " user " + chatRoom.getUsersId());
 			System.out.println(i);
 		} 
 		catch (Exception e) 

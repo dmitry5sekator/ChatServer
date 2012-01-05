@@ -55,6 +55,7 @@ public class MessagesController
 			ResultSet usersInRoom = room.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
 			//—формировал XML с телом ивента
 			String xml = MyXML.createXML_Event_newMsgInRoom(Integer.parseInt(map.get("chatroom_id")), Integer.parseInt(map.get("users_id")), map.get("message"));
+			Logger.writeEvent("Post new message " + msg.getMessage() + " user " + msg.getUsersId() + " in room " + msg.getChatroomId());
 			//÷иклом прогон€юсь по всем юзерам в комнате дл€ отправки
 			while(usersInRoom.next())
 			{
