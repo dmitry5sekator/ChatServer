@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
 
+import logger.Logger;
+
 
 public abstract class TableGateWay 
 {
@@ -26,6 +28,7 @@ public abstract class TableGateWay
 		}
 		catch(Exception e)
 		{
+			try{Logger.writeEvent(e.toString());}catch(Exception ex){ex.printStackTrace();}
 			e.printStackTrace();
 			return 0;
 		}
