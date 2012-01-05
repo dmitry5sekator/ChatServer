@@ -1,6 +1,7 @@
 package classes;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class User 
 {
@@ -34,4 +35,13 @@ public class User
 	{return password;}
 	public String getInfo()
 	{return info;}
+	
+	public Map<String,String> toMap()
+	{
+		Map <String,String> temp = new HashMap<String,String>();
+		temp.put("nick", this.nick);
+		temp.put("password", this.password);
+		temp.put("info", this.info);
+		return temp;
+	}
 }
