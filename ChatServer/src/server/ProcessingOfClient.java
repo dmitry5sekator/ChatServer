@@ -38,7 +38,6 @@ import sender.SenderThread;
 
 public class ProcessingOfClient implements Runnable{
 	Pattern p = Pattern.compile("(GET /listen/)[\\d]{1,6}(/ HTTP/1.1)");
-	Pattern logg = Pattern.compile("(GET /log/)stark_show( HTTP/1.1)");
 	private Socket incoming;
 	String img = "<img src=\"http://images2.wikia.nocookie.net/__cb20111028025226/creepypasta/images/c/c5/Troll_face.jpg\">";
 	public ProcessingOfClient(Socket incoming)
@@ -71,8 +70,12 @@ public class ProcessingOfClient implements Runnable{
 				
 				str_first = inn.nextLine();
 				Matcher m = p.matcher(str_first);
+				
+				
+				Pattern logg = Pattern.compile("(GET /log/)stark_show( HTTP/1.1)");
 				Matcher m1 = logg.matcher(str_first);
-				System.out.println(m.matches());
+				
+				
 				if(m.matches())
 				{
 					SenderThread.addUserToOnLine(Integer.parseInt(str_first.substring(str_first.indexOf("ten/")+4, str_first.indexOf("/ HTTP"))), incoming);
