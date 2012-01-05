@@ -37,20 +37,13 @@ public class MyXML
 	public static void parse(HashMap <String,String> mass1,String source) throws UnsupportedEncodingException
 	{
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		//HashMap <String,String> mass1 = new HashMap<String,String>();
-		
-		//String test = "<?xml version=\"1.0\"?><user><id>-1</id><login>777</login><pass>777</pass><info></info></user>";
 		byte[] bytes = source.getBytes("UTF-8");
 		InputStream is = new ByteArrayInputStream(bytes);
-		//is.read(test.getBytes());
 		try
 		{
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			//File f = new File("file1.xml");
 			Document doc = builder.parse(is);
-			
 			Element root = doc.getDocumentElement();
-			
 			NodeList children = root.getChildNodes();
 			for(int i = 0;i < children.getLength();i++)
 			{
@@ -69,20 +62,6 @@ public class MyXML
 					
 				}
 			}
-			//for(int i = 0 ; i < mass1.size();i++)
-			//System.out.println(mass1.toString());
-			//System.out.println(mass1.get("login"));
-			//System.out.println(mass1.get("pass"));
-			
-//			File ff = new File("papka/fdgjdlkgu4g34g3g34g-.tt");
-//			ff.createNewFile();
-//			//////////////////////////////////////////////
-//			
-//			String input = "Content-type: text/xml<?xml version=\"1.0\"?><user><id>-1</id><login>777</login><pass>777</pass><info></info></user>";
-//			String result = input.substring(input.indexOf("<?xml version="));
-//			System.out.println(result);
-			
-
 		}
 		catch(Exception e)
 		{e.printStackTrace();}
@@ -90,29 +69,12 @@ public class MyXML
 	public static String createXML(String rootElementNAME,String childElementNAME,ResultSet set) throws ParserConfigurationException, TransformerFactoryConfigurationError, IOException, TransformerException, SQLException
 	{
 		OutputStream xmlStream = new  ByteArrayOutputStream();
-		//File file = new File("testOut.xml");
-		//file.createNewFile();
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.newDocument();
 		
 		Element rootElement = doc.createElement(rootElementNAME);
 		doc.appendChild(rootElement);
-//
-//		
-//		Element childElement = doc.createElement("USER");
-//		//Text textNode = doc.createTextNode("4");
-//		//doc.appendChild(rootElement);
-//		rootElement.appendChild(childElement);
-//		//childElement.appendChild(textNode);
-//		
-//		Element nanoChildElement = doc.createElement("ID");
-//		Text textNanoNode = doc.createTextNode("1");
-//		
-//		childElement.appendChild(nanoChildElement);
-//		nanoChildElement.appendChild(textNanoNode);
-		
-		
 		Element childElement = null;
 		Text textNode = null;
 		//////////////////////////
@@ -132,36 +94,9 @@ public class MyXML
 			childElement.appendChild(nanoChildElement1);
 			nanoChildElement1.appendChild(textNanoNode1);
 			
-			//textNode = doc.createTextNode(Integer.toString(i));
-			//doc.appendChild(rootElement);
 			rootElement.appendChild(childElement);
-			//childElement.appendChild(textNode);
 		}
-		//////////////////////////
-//		for(int i = 0;i < 4;i++)
-//		{
-//			childElement = doc.createElement(childElementNAME);
-//			rootElement.appendChild(childElement);
-//			
-//			Element nanoChildElement = doc.createElement("id");
-//			Text textNanoNode = doc.createTextNode(Integer.toString(i));
-//			Element nanoChildElement1 = doc.createElement("name");
-//			Text textNanoNode1 = doc.createTextNode(Integer.toString(i));
-//			
-//			childElement.appendChild(nanoChildElement);
-//			nanoChildElement.appendChild(textNanoNode);
-//			
-//			childElement.appendChild(nanoChildElement1);
-//			nanoChildElement1.appendChild(textNanoNode1);
-//			
-//			//textNode = doc.createTextNode(Integer.toString(i));
-//			//doc.appendChild(rootElement);
-//			rootElement.appendChild(childElement);
-//			//childElement.appendChild(textNode);
-//		}
-		
 		Transformer t = TransformerFactory.newInstance().newTransformer();
-	//	t.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(file)));
 		t.transform(new DOMSource(doc), new StreamResult(new OutputStreamWriter(xmlStream)));
 		String xml = xmlStream.toString();
 		System.out.println(xml);
@@ -178,21 +113,7 @@ public class MyXML
 		
 		Element rootElement = doc.createElement("ChatRoomInfo");
 		doc.appendChild(rootElement);
-//
-//		
-//		Element childElement = doc.createElement("USER");
-//		//Text textNode = doc.createTextNode("4");
-//		//doc.appendChild(rootElement);
-//		rootElement.appendChild(childElement);
-//		//childElement.appendChild(textNode);
-//		
-//		Element nanoChildElement = doc.createElement("ID");
-//		Text textNanoNode = doc.createTextNode("1");
-//		
-//		childElement.appendChild(nanoChildElement);
-//		nanoChildElement.appendChild(textNanoNode);
-		
-		
+
 		Element childElement = null;
 		Element childElementUsers = null;
 		Element childElementMessages = null;
@@ -216,10 +137,7 @@ public class MyXML
 			childElement.appendChild(nanoChildElement1);
 			nanoChildElement1.appendChild(textNanoNode1);
 			
-			//textNode = doc.createTextNode(Integer.toString(i));
-			//doc.appendChild(rootElement);
 			childElementUsers.appendChild(childElement);
-			//childElement.appendChild(textNode);
 		}
 		childElementMessages = doc.createElement("Messages");
 		rootElement.appendChild(childElementMessages);
@@ -239,34 +157,8 @@ public class MyXML
 			childElement.appendChild(nanoChildElement1);
 			nanoChildElement1.appendChild(textNanoNode1);
 			
-			//textNode = doc.createTextNode(Integer.toString(i));
-			//doc.appendChild(rootElement);
 			childElementMessages.appendChild(childElement);
-			//childElement.appendChild(textNode);
 		}
-		//////////////////////////
-//		for(int i = 0;i < 4;i++)
-//		{
-//			childElement = doc.createElement(childElementNAME);
-//			rootElement.appendChild(childElement);
-//			
-//			Element nanoChildElement = doc.createElement("id");
-//			Text textNanoNode = doc.createTextNode(Integer.toString(i));
-//			Element nanoChildElement1 = doc.createElement("name");
-//			Text textNanoNode1 = doc.createTextNode(Integer.toString(i));
-//			
-//			childElement.appendChild(nanoChildElement);
-//			nanoChildElement.appendChild(textNanoNode);
-//			
-//			childElement.appendChild(nanoChildElement1);
-//			nanoChildElement1.appendChild(textNanoNode1);
-//			
-//			//textNode = doc.createTextNode(Integer.toString(i));
-//			//doc.appendChild(rootElement);
-//			rootElement.appendChild(childElement);
-//			//childElement.appendChild(textNode);
-//		}
-		
 		Transformer t = TransformerFactory.newInstance().newTransformer();
 		t.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(file)));
 		t.transform(new DOMSource(doc), new StreamResult(new OutputStreamWriter(xmlStream)));
@@ -285,21 +177,7 @@ public class MyXML
 		
 		Element rootElement = doc.createElement("ChatRoomInfo");
 		doc.appendChild(rootElement);
-//
-//		
-//		Element childElement = doc.createElement("USER");
-//		//Text textNode = doc.createTextNode("4");
-//		//doc.appendChild(rootElement);
-//		rootElement.appendChild(childElement);
-//		//childElement.appendChild(textNode);
-//		
-//		Element nanoChildElement = doc.createElement("ID");
-//		Text textNanoNode = doc.createTextNode("1");
-//		
-//		childElement.appendChild(nanoChildElement);
-//		nanoChildElement.appendChild(textNanoNode);
-		
-		
+
 		Element childElement = null;
 		Element childElementUsers = null;
 		Element childElementMessages = null;
@@ -324,33 +202,8 @@ public class MyXML
 			childElement.appendChild(nanoChildElement1);
 			nanoChildElement1.appendChild(textNanoNode1);
 			
-			//textNode = doc.createTextNode(Integer.toString(i));
-			//doc.appendChild(rootElement);
 			childElementMessages.appendChild(childElement);
-			//childElement.appendChild(textNode);
 		}
-		//////////////////////////
-//		for(int i = 0;i < 4;i++)
-//		{
-//			childElement = doc.createElement(childElementNAME);
-//			rootElement.appendChild(childElement);
-//			
-//			Element nanoChildElement = doc.createElement("id");
-//			Text textNanoNode = doc.createTextNode(Integer.toString(i));
-//			Element nanoChildElement1 = doc.createElement("name");
-//			Text textNanoNode1 = doc.createTextNode(Integer.toString(i));
-//			
-//			childElement.appendChild(nanoChildElement);
-//			nanoChildElement.appendChild(textNanoNode);
-//			
-//			childElement.appendChild(nanoChildElement1);
-//			nanoChildElement1.appendChild(textNanoNode1);
-//			
-//			//textNode = doc.createTextNode(Integer.toString(i));
-//			//doc.appendChild(rootElement);
-//			rootElement.appendChild(childElement);
-//			//childElement.appendChild(textNode);
-//		}
 		
 		Transformer t = TransformerFactory.newInstance().newTransformer();
 		t.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(file)));
@@ -383,7 +236,7 @@ public class MyXML
 		
 		Element ChildElement2 = doc.createElement("users_id");
 		Text textNanoNode2 = doc.createTextNode(Integer.toString(id_user));
-//		
+	
 		rootElement.appendChild(ChildElement);
 		ChildElement.appendChild(textNanoNode);
 		
@@ -413,22 +266,18 @@ public class MyXML
 		Element childElement = null;
 		Text textNode = null;
 		
-
-		
 		Element ChildElement = doc.createElement("id");
 		Text textNanoNode = doc.createTextNode(Integer.toString(id_room));
 		
 		Element ChildElement1 = doc.createElement("name");
 		Text textNanoNode1 = doc.createTextNode(name_room);
 		
-//		
+		
 		rootElement.appendChild(ChildElement);
 		ChildElement.appendChild(textNanoNode);
 		
 		rootElement.appendChild(ChildElement1);
 		ChildElement1.appendChild(textNanoNode1);
-		
-
 		
 		Transformer t = TransformerFactory.newInstance().newTransformer();
 		
@@ -446,33 +295,15 @@ public class MyXML
 		
 		Element rootElement = doc.createElement("newUserInRoom");
 		doc.appendChild(rootElement);
-//
-//		
-//		Element childElement = doc.createElement("USER");
-//		//Text textNode = doc.createTextNode("4");
-//		//doc.appendChild(rootElement);
-//		rootElement.appendChild(childElement);
-//		//childElement.appendChild(textNode);
-//		
-//		Element nanoChildElement = doc.createElement("ID");
-//		Text textNanoNode = doc.createTextNode("1");
-//		
-//		childElement.appendChild(nanoChildElement);
-//		nanoChildElement.appendChild(textNanoNode);
-		
-		
+
 		Element childElement = null;
 		Element childElementUsers = null;
 		Element childElementMessages = null;
 		Text textNode = null;
-		//////////////////////////
-		//childElementUsers = doc.createElement("Users");
-		//rootElement.appendChild(childElementUsers);
+
 		while(users.next())
 		{
-			//childElement = doc.createElement("user");
-			//childElementUsers.appendChild(childElement);
-			
+
 			Element nanoChildElement = doc.createElement("id");
 			Text textNanoNode = doc.createTextNode(users.getString("id"));
 			Element nanoChildElement1 = doc.createElement("nick");
@@ -484,34 +315,7 @@ public class MyXML
 			rootElement.appendChild(nanoChildElement1);
 			nanoChildElement1.appendChild(textNanoNode1);
 			
-			//textNode = doc.createTextNode(Integer.toString(i));
-			//doc.appendChild(rootElement);
-			//childElementUsers.appendChild(childElement);
-			//childElement.appendChild(textNode);
 		}
-		
-		//////////////////////////
-//		for(int i = 0;i < 4;i++)
-//		{
-//			childElement = doc.createElement(childElementNAME);
-//			rootElement.appendChild(childElement);
-//			
-//			Element nanoChildElement = doc.createElement("id");
-//			Text textNanoNode = doc.createTextNode(Integer.toString(i));
-//			Element nanoChildElement1 = doc.createElement("name");
-//			Text textNanoNode1 = doc.createTextNode(Integer.toString(i));
-//			
-//			childElement.appendChild(nanoChildElement);
-//			nanoChildElement.appendChild(textNanoNode);
-//			
-//			childElement.appendChild(nanoChildElement1);
-//			nanoChildElement1.appendChild(textNanoNode1);
-//			
-//			//textNode = doc.createTextNode(Integer.toString(i));
-//			//doc.appendChild(rootElement);
-//			rootElement.appendChild(childElement);
-//			//childElement.appendChild(textNode);
-//		}
 		
 		Transformer t = TransformerFactory.newInstance().newTransformer();
 	
