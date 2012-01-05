@@ -3,6 +3,8 @@ package table;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import logger.Logger;
+
 public class RecipientTable   extends TableGateWay
 {
 	String tableName = "recipient";
@@ -23,6 +25,7 @@ public class RecipientTable   extends TableGateWay
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			return 0;
 		}
 	}

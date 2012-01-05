@@ -13,6 +13,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
+import logger.Logger;
+
 import classes.ChatRoom;
 import classes.Recipient;
 
@@ -48,11 +50,13 @@ public class ChatRoomController
 			table.getOverFromRoom(Integer.parseInt(user), Integer.parseInt(chatroom));
 			http_response.setBody("");
 			http_response.setResponseCode(ResponseCodes.UserLiveAloneFromTheRoom);
+			
 		}
 		catch (Exception e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 	public void deleteChatRoom(UserRequest http_request,Response http_response) //+
@@ -90,6 +94,7 @@ public class ChatRoomController
 		catch (Exception e) 
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 	public void createChatRoom(UserRequest http_request,Response http_response)//POST + 
@@ -119,7 +124,7 @@ public class ChatRoomController
 		} 
 		catch (Exception e) 
 		{
-			// TODO Auto-generated catch block
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			e.printStackTrace();
 		}
 	}

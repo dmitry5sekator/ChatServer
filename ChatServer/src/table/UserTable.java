@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import logger.Logger;
+
 public class UserTable extends TableGateWay
 {
 	String tableName = "users";
@@ -31,6 +33,7 @@ public class UserTable extends TableGateWay
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			return false;
 		}
 		
@@ -54,6 +57,7 @@ public class UserTable extends TableGateWay
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			return 0;
 		}
 	
@@ -69,6 +73,7 @@ public class UserTable extends TableGateWay
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			return null;
 		}
 		

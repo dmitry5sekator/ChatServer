@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.sql.*;
 
+import logger.Logger;
+
 import our.Response;
 import our.ResponseCodes;
 
@@ -34,6 +36,7 @@ public class ConnectToDB {
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 	public static Connection getConnection ()
@@ -49,6 +52,7 @@ public class ConnectToDB {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 }

@@ -11,6 +11,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
+import logger.Logger;
+
 import sender.SenderThread;
 
 import controllers.ApplicationController;
@@ -54,6 +56,7 @@ public class Engine {
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 

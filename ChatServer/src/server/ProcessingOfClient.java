@@ -25,6 +25,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import logger.Logger;
+
 import controllers.ApplicationController;
 
 import our.Response;
@@ -111,6 +113,7 @@ public class ProcessingOfClient implements Runnable{
 						incoming.shutdownOutput();
 						incoming.close();
 						e.printStackTrace();
+						try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 					}
 
 					ApplicationController.dispatch(httpRequest,httpResponse);
@@ -129,6 +132,7 @@ public class ProcessingOfClient implements Runnable{
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 }

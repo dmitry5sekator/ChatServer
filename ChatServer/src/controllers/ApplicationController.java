@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import logger.Logger;
+
 import our.Response;
 import our.ResponseCodes;
 import our.UserRequest;
@@ -53,9 +55,10 @@ public class ApplicationController
 				}
 			}
 		}
-		catch(Exception ex)
+		catch(Exception e)
 		{
-			ex.printStackTrace();
+			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			http_response.setResponseCode(ResponseCodes.BadRequest);
 		}
 	}

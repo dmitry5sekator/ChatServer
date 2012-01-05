@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import logger.Logger;
+
 import controllers.ApplicationController;
 
 
@@ -46,6 +48,7 @@ public class FileReader extends RouteReader
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
+			try{Logger.writeEvent(ex.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 	

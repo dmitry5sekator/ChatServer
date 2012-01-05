@@ -95,6 +95,7 @@ public abstract class TableGateWay
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			return null;
 		}
 	}

@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import logger.Logger;
+
 import our.Response;
 
 public class SenderThread implements Runnable
@@ -52,6 +54,7 @@ public class SenderThread implements Runnable
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			}
 		}
 		

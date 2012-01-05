@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import logger.Logger;
+
 public class MessagesTable  extends TableGateWay
 {
 	String tableName = "messages";
@@ -23,6 +25,7 @@ public class MessagesTable  extends TableGateWay
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			return null;
 		}
 	}

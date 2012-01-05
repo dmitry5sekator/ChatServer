@@ -15,6 +15,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
+import logger.Logger;
+
 import classes.Message;
 
 
@@ -65,6 +67,7 @@ public class MessagesController
 		catch (Exception e) 
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 	public synchronized void getMessageFromChatRoom(UserRequest http_request,Response http_response) 
@@ -84,6 +87,7 @@ public class MessagesController
 		catch (Exception e) 
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 }

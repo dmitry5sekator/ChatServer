@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import logger.Logger;
+
 public class ChatRoomTable  extends TableGateWay
 {
 	String tableName = "chatroom";
@@ -26,6 +28,7 @@ public class ChatRoomTable  extends TableGateWay
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 		return null;
 	}
@@ -48,7 +51,9 @@ public class ChatRoomTable  extends TableGateWay
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 			return 0;
+			
 		}
 		
 	}

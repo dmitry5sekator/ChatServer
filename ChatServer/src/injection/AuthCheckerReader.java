@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import logger.Logger;
+
 import server.AuthChecker;
 import server.ConnectToDB;
 import table.UserTable;
@@ -30,6 +32,7 @@ public class AuthCheckerReader
 		catch(SQLException e )
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 }

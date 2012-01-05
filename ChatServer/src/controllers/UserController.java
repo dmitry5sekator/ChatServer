@@ -17,6 +17,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
+import logger.Logger;
+
 import classes.User;
 
 
@@ -60,6 +62,7 @@ public class UserController
 		catch (Exception e) 
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 	public void logOut(UserRequest http_request,Response http_response)
@@ -88,6 +91,7 @@ public class UserController
 		catch (Exception e) 
 		{
 			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
 		}
 	}
 	
