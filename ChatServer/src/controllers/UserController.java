@@ -32,7 +32,7 @@ import table.UserTable;
 
 public class UserController 
 {
-	private User user = new User();
+	//private User user = new User();
 	private HashMap <String,String> map = new HashMap <String,String>();
 	public void getUser(UserRequest http_request,Response http_response) // +
 	{
@@ -42,20 +42,12 @@ public class UserController
 	{
 		try
 		{
-		/////////////////
-		Connection conn = ConnectToDB.getConnection();
-		//////////////////
-		String body = http_request.getBody();
-		HashMap <String,String> map = new HashMap<String,String>();
-		
+			Connection conn = ConnectToDB.getConnection();
+			String body = http_request.getBody();
+			HashMap <String,String> map = new HashMap<String,String>();
 			MyXML.parse(map, body);
 			UserTable table = new UserTable(conn);
 			String answer = "";
-//			MyMap toDB = new MyMap();
-//			toDB.add("nick", map.get("nick"));
-//			toDB.add("password", map.get("password"));
-//			toDB.add("info", map.get("info"));
-			
 			boolean check = table.checkSingIn(Integer.parseInt(map.get("id")), map.get("password"));
 			if(check)
 			{
@@ -63,17 +55,11 @@ public class UserController
 				ResultSet set = room.select();
 				answer = MyXML.createXML("Chatrooms", "chatroom",set);
 			}
-			
 			http_response.setBody(answer);
 			http_response.setResponseCode(ResponseCodes.UserSignedIn);
-			
-			
-			
-			//System.out.println(i);
 		} 
 		catch (Exception e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -89,41 +75,20 @@ public class UserController
 	{
 		try 
 		{
-		/////////////////
-		Connection conn = ConnectToDB.getConnection();
-		//////////////////
-		String body = http_request.getBody();
-		HashMap <String,String> map = new HashMap<String,String>();
-		MyXML.parse(map, body);
-		UserTable table = new UserTable(conn);
-		///////////// ololo ///////////////////////////////////
-		
-		User user = new User(map);
-		
-		
-		/////////////////////////////////////////////////////////
-			
-			
-//			MyMap toDB = new MyMap();
-//			toDB.add("nick", map.get("nick"));
-//			toDB.add("password", map.get("password"));
-//			toDB.add("info", map.get("info"));
-			///////// DTO //////////////////////////////
-			///////////////////////////////////////////
-		//	table.insert(toDB);
+			Connection conn = ConnectToDB.getConnection();
+			String body = http_request.getBody();
+			HashMap <String,String> map = new HashMap<String,String>();
+			MyXML.parse(map, body);
+			UserTable table = new UserTable(conn);
+			User user = new User(map);
 			table.insert(user.toMap());
 			int i = table.returnId(map.get("nick"), map.get("password"));
-			
 			http_response.setBody("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><user><id>"+i+"</id></user>");
 			http_response.setResponseCode(ResponseCodes.UserAdded);
-			
-			
-			
 			System.out.println(i);
 		} 
 		catch (Exception e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
