@@ -32,7 +32,7 @@ import table.UserTable;
 
 public class UserController 
 {
-	//private User user = new User();
+	private User user = new User();
 	private HashMap <String,String> map = new HashMap <String,String>();
 	public void getUser(UserRequest http_request,Response http_response) // +
 	{
@@ -44,7 +44,6 @@ public class UserController
 		{
 			Connection conn = ConnectToDB.getConnection();
 			String body = http_request.getBody();
-			HashMap <String,String> map = new HashMap<String,String>();
 			MyXML.parse(map, body);
 			UserTable table = new UserTable(conn);
 			String answer = "";
@@ -77,10 +76,9 @@ public class UserController
 		{
 			Connection conn = ConnectToDB.getConnection();
 			String body = http_request.getBody();
-			HashMap <String,String> map = new HashMap<String,String>();
 			MyXML.parse(map, body);
 			UserTable table = new UserTable(conn);
-			User user = new User(map);
+			user = new User(map);
 			table.insert(user.toMap());
 			int i = table.returnId(map.get("nick"), map.get("password"));
 			http_response.setBody("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><user><id>"+i+"</id></user>");
