@@ -1,6 +1,7 @@
 package classes;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ChatRoom 
 {
@@ -34,4 +35,13 @@ public class ChatRoom
 	{return info;}
 	public int getUsersId()
 	{return users_id;}
+	
+	public Map<String,String> toMap()
+	{
+		Map <String,String> temp = new HashMap<String,String>();
+		temp.put("name", this.name);
+		temp.put("info", this.info);
+		temp.put("users_id", Integer.toString(this.users_id));
+		return temp;
+	}
 }

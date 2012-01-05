@@ -3,6 +3,7 @@ package classes;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Message 
 {
@@ -42,4 +43,14 @@ public class Message
 	{return chatroom_id;}
 	public String getTime()
 	{return time;}
+	
+	public Map<String,String> toMap()
+	{
+		Map <String,String> temp = new HashMap<String,String>();
+		temp.put("message", this.message);
+		temp.put("users_id", Integer.toString(this.users_id));
+		temp.put("chatroom_id", Integer.toString(this.chatroom_id));
+		temp.put("time", this.time);
+		return temp;
+	}
 }

@@ -1,6 +1,7 @@
 package classes;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Recipient 
 {
@@ -27,4 +28,12 @@ public class Recipient
 	{return users_id;}
 	public int getChatroomId()
 	{return chatroom_id;}
+	
+	public Map<String,String> toMap()
+	{
+		Map <String,String> temp = new HashMap<String,String>();
+		temp.put("users_id", Integer.toString(this.users_id));
+		temp.put("chatroom_id", Integer.toString(this.chatroom_id));
+		return temp;
+	}
 }
