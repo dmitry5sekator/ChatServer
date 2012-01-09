@@ -16,7 +16,7 @@ public class Message
 	public Message(HashMap <String,String> map)
 	{
 		this.message = map.get("message");
-		this.users_id = Integer.parseInt(map.get("message"));
+		this.users_id = Integer.parseInt(map.get("users_id"));
 		this.chatroom_id = Integer.parseInt(map.get("chatroom_id"));
 		Calendar cal = Calendar.getInstance();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
