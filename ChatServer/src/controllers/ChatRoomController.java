@@ -28,6 +28,7 @@ import server.ConnectToDB;
 import table.ChatRoomTable;
 import table.MessagesTable;
 import table.RecipientTable;
+import table.UserTable;
 
 public class ChatRoomController
 {
@@ -51,6 +52,39 @@ public class ChatRoomController
 			http_response.setBody("");
 			http_response.setResponseCode(ResponseCodes.UserLiveAloneFromTheRoom);
 			Logger.writeEvent("User " + user + " out of the room " + chatroom);
+			///////////////////////////////////////////////////////////////////
+//			ChatRoomTable room = new ChatRoomTable(conn);
+//			//Получил всех юзеров в комнате для отправки им
+//			ResultSet usersInRoom = room.getAllUsersFromChatRoom(Integer.parseInt(chatroom));
+//			//Сформировал XML с телом ивента
+//			String xml = MyXML.createXML_Event_newUserInRoom(usersInRoom);
+//			while(usersInRoom.next())
+//			{
+//				if(usersInRoom.getInt("users.id") != Integer.parseInt(user))
+//					SenderThread.addEvent(new Response(ResponseCodes.newUserInRoom,xml),usersInRoom.getInt("users.id"));
+//			}
+			//////////////////////////////////////////////////
+			ChatRoomTable testTable = new ChatRoomTable(conn);
+			ResultSet testResult = testTable.getAllUsersFromChatRoom(Integer.parseInt(chatroom));
+			UserTable ololo = new UserTable(conn);
+			
+			System.out.println("======================= START ======================");
+			while(testResult.next())
+			{
+				System.out.println("usersInRoom.next()");
+				System.out.println(testResult.getInt("users.id"));
+				System.out.println(Integer.parseInt(user));
+				if(testResult.getInt("users.id") != Integer.parseInt(user))
+				{
+					String xmlka = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><UserLiveAloneFromTheRoom><id>"+user+"</id><nick>"+ololo.returnNick(user)+"</nick></UserLiveAloneFromTheRoom>";
+					System.out.println("Послал newUserInRoom на " + testResult.getInt("users.id"));
+					SenderThread.addEvent(new Response(ResponseCodes.UserLiveAloneFromTheRoom,xmlka),testResult.getInt("users.id"));
+				}
+			}
+			Logger.writeEvent("User " +user + " alone from the room " + chatroom);
+			System.out.println("======================= OVER ======================");
+			//////////////////////////////////////////////////
+			//Logger.writeEvent("User " + user + " out of the room " + chatroom);
 		}
 		catch (Exception e) 
 		{
@@ -67,12 +101,26 @@ public class ChatRoomController
 	{
 		try 
 		{
+			
+				
 			Connection conn = ConnectToDB.getConnection();
 			String body = http_request.getBody();
 			HashMap <String,String> map = new HashMap<String,String>();
 			MyXML.parse(map, body);
+			
+			
+			
+			ChatRoomTable testTable = new ChatRoomTable(conn);
+			ResultSet testResult = testTable.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
+			UserTable ololo = new UserTable(conn);
+			
+			
+			
+			
 			RecipientTable table = new RecipientTable(conn);
 			Recipient userInRoom = new Recipient(map);
+			
+			
 			table.insert(userInRoom.toMap());
 			ChatRoomTable table1 = new ChatRoomTable(conn);
 			ResultSet users = table1.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
@@ -80,17 +128,27 @@ public class ChatRoomController
 			ResultSet msgs = msg.getMessageFromChatRoom(Integer.parseInt(map.get("chatroom_id")), 1);
 			http_response.setBody(MyXML.createXML_Room_UsersMSG(users, msgs));
 			http_response.setResponseCode(ResponseCodes.UserAddedToRoom);
-			ChatRoomTable room = new ChatRoomTable(conn);
+			//ChatRoomTable room = new ChatRoomTable(conn);
 			//Получил всех юзеров в комнате для отправки им
-			ResultSet usersInRoom = room.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
+			System.out.println("Получаю типов с комнаты  " + map.get("chatroom_id"));
+			//ResultSet usersInRoom = table1.getAllUsersFromChatRoom(Integer.parseInt(map.get("chatroom_id")));
 			//Сформировал XML с телом ивента
-			String xml = MyXML.createXML_Event_newUserInRoom(usersInRoom);
-			while(usersInRoom.next())
+			//String xml = MyXML.createXML_Event_newUserInRoom(testResult);
+			System.out.println("======================= START ======================");
+			while(testResult.next())
 			{
-				if(usersInRoom.getInt("users.id") != Integer.parseInt(map.get("users_id")))
-					SenderThread.addEvent(new Response(ResponseCodes.newUserInRoom,xml),usersInRoom.getInt("users.id"));
+				System.out.println("usersInRoom.next()");
+				System.out.println(testResult.getInt("users.id"));
+				System.out.println(Integer.parseInt(map.get("users_id")));
+				if(testResult.getInt("users.id") != Integer.parseInt(map.get("users_id")))
+				{
+					String xmlka = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><newUserInRoom><id>"+map.get("users_id")+"</id><nick>"+ololo.returnNick(map.get("users_id"))+"</nick></newUserInRoom>";
+					System.out.println("Послал newUserInRoom на " + testResult.getInt("users.id"));
+					SenderThread.addEvent(new Response(ResponseCodes.newUserInRoom,xmlka),testResult.getInt("users.id"));
+				}
 			}
 			Logger.writeEvent("User " + userInRoom.getUsersId() + " entered the room " + userInRoom.getChatroomId());
+			System.out.println("======================= OVER ======================");
 		} 
 		catch (Exception e) 
 		{

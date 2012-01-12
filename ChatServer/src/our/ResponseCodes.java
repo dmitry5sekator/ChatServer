@@ -11,6 +11,7 @@ public enum ResponseCodes implements Serializable
 	UserExists,
 	UserUpdated,
 	UserNotFound,
+	UserOffLine,
 	
 	RoomAdded,
 	RoomDeleted,

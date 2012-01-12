@@ -59,7 +59,7 @@ public class SenderThread implements Runnable
 		}
 		
 	}
-	private synchronized int getIdArray(int TableId)
+	private synchronized static int getIdArray(int TableId)
 	{
 		for(int i = 0;i < online_list.size();i++)
 		{
@@ -84,6 +84,61 @@ public class SenderThread implements Runnable
 		PrintWriter r = new PrintWriter(output,true);
 		Logger.writeEvent("Successfully added the listener! ip : " + s.getInetAddress().toString() + " port : " + s.getPort());
 		System.out.println("Successfully added the listener! ip : " + s.getInetAddress().toString() + " port : " + s.getPort());
+		/////////////////////////////////////
+		for(int i = 0;i < online_list.size();i++)
+		{
+			System.out.println("ONLINE : " + online_list.get(i).idTable);
+		}
+		////////////////////////////////////
+	}
+	public synchronized static void removeUserFromOnLine(int id) throws IOException
+	{
+		//online_list.add(new SenderMap(id,s));
+		//online_list.get(online_list.size()-1).setIdArray(online_list.size()-1);
+		//OutputStream output = s.getOutputStream();
+		//PrintWriter r = new PrintWriter(output,true);
+		//Logger.writeEvent("Successfully added the listener! ip : " + s.getInetAddress().toString() + " port : " + s.getPort());
+		//System.out.println("Successfully added the listener! ip : " + s.getInetAddress().toString() + " port : " + s.getPort());
+		int index = getIdArray(id);
+		online_list.remove(index);
+		if(!online_list.isEmpty())
+			if(index == 0)
+				{online_list.get(0).setIdArray(0);}
+		//////////// STEP1 ///////////////////////
+		for(int i = 0;i < online_list.size();i++)
+		{
+			System.out.println("=========Before================");
+			System.out.println("");
+			System.out.println("idArray : " + online_list.get(i).idArray);
+			System.out.println("idTable : " + online_list.get(i).idTable);
+			System.out.println("================================");
+		}
+		////////////////////////////////////////////
+		for(int i = 0;i < online_list.size();i++)
+		{
+			if(i == 0)
+			{
+				
+			}
+			else
+			{
+				online_list.get(i).setIdArray(online_list.get(i).idArray-1);
+				if(online_list.size() == 1)
+				{
+					online_list.get(i).setIdArray(0);
+				}
+				
+			}
+		}
+		//System.out.println("OFFLINE : " + online_list.get(index).idTable);
+		for(int i = 0;i < online_list.size();i++)
+		{
+			System.out.println("=========Atfer================");
+			System.out.println("");
+			System.out.println("idArray : " + online_list.get(i).idArray);
+			System.out.println("idTable : " + online_list.get(i).idTable);
+			System.out.println("================================");
+		}
 	}
 
 }

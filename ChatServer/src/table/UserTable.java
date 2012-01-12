@@ -38,6 +38,29 @@ public class UserTable extends TableGateWay
 		}
 		
 	}
+	public synchronized String returnNick(String id)
+	{
+		try
+		{
+			Statement stat = conn.createStatement();
+			String SQL = "SELECT nick FROM "+tableName+" WHERE id = "+id+"";
+			ResultSet set = stat.executeQuery(SQL);
+			if(set.next())
+			{
+				return set.getString("nick");
+			}
+			else
+			{
+				return "null";
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			try{Logger.writeEvent(e.toString());}catch(Exception exep){exep.printStackTrace();}
+			return "null";
+		}
+	}
 	public synchronized int returnId(String nick,String password)
 	{
 		try

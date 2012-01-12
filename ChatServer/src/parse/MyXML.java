@@ -228,23 +228,37 @@ public class MyXML
 		
 
 		
-		Element ChildElement = doc.createElement("id");
-		Text textNanoNode = doc.createTextNode(Integer.toString(id_room));
+		//Element ChildElement = doc.createElement("id");
+		//Text textNanoNode = doc.createTextNode(Integer.toString(id_room));
 		
-		Element ChildElement1 = doc.createElement("msg");
-		Text textNanoNode1 = doc.createTextNode(msg);
+		//Element ChildElement1 = doc.createElement("msg");
+		//Text textNanoNode1 = doc.createTextNode(msg);
 		
-		Element ChildElement2 = doc.createElement("users_id");
-		Text textNanoNode2 = doc.createTextNode(Integer.toString(id_user));
+		//Element ChildElement2 = doc.createElement("users_id");
+		//Text textNanoNode2 = doc.createTextNode(Integer.toString(id_user));
 	
-		rootElement.appendChild(ChildElement);
-		ChildElement.appendChild(textNanoNode);
+		//rootElement.appendChild(ChildElement);
+		//ChildElement.appendChild(textNanoNode);
+		
+		
+		//////////////////////////////////////
+		Element ChildElement1 = doc.createElement("users_id");
+		Text textNanoNode1 = doc.createTextNode(Integer.toString(id_user));
+		
+		Element ChildElement2 = doc.createElement("msg");
+		Text textNanoNode2 = doc.createTextNode(msg);
 		
 		rootElement.appendChild(ChildElement1);
 		ChildElement1.appendChild(textNanoNode1);
 		
 		rootElement.appendChild(ChildElement2);
 		ChildElement2.appendChild(textNanoNode2);
+		/////////////////////////////////////
+		//rootElement.appendChild(ChildElement1);
+		//ChildElement1.appendChild(textNanoNode1);
+		
+		//rootElement.appendChild(ChildElement2);
+		//ChildElement2.appendChild(textNanoNode2);
 		
 		Transformer t = TransformerFactory.newInstance().newTransformer();
 		
@@ -301,8 +315,8 @@ public class MyXML
 		Element childElementMessages = null;
 		Text textNode = null;
 
-		while(users.next())
-		{
+		//while(users.next())
+		//{
 
 			Element nanoChildElement = doc.createElement("id");
 			Text textNanoNode = doc.createTextNode(users.getString("id"));
@@ -315,13 +329,13 @@ public class MyXML
 			rootElement.appendChild(nanoChildElement1);
 			nanoChildElement1.appendChild(textNanoNode1);
 			
-		}
+		//}
 		
 		Transformer t = TransformerFactory.newInstance().newTransformer();
 	
 		t.transform(new DOMSource(doc), new StreamResult(new OutputStreamWriter(xmlStream)));
 		String xml = xmlStream.toString();
-		System.out.println(xml);
+		System.out.println("¬ÌËÏ‡ÌËÂ newUserInRoom —ÃŒ“–»Ã : " + xml);
 		return xml;
 	}
 }
